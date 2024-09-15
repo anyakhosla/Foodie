@@ -1,4 +1,6 @@
 from django.shortcuts import render, get_object_or_404
+from django.contrib.auth.decorators import login_required
+from django.conf import settings
 
 # Create your views here.
 
@@ -7,11 +9,9 @@ from django.shortcuts import render, get_object_or_404
 def mapView(request):
     # question = get_object_or_404(Question, pk=id)
     # return render(request, "foodie/mapView.html", {"question": question})
-    return render(request, "foodie/mapView.html")
-
-from django.contrib.auth.decorators import login_required
-from django.shortcuts import render
-
+    return render(request, "foodie/mapView.html", {'GOOGLE_MAPS_API_KEY' : settings.GOOGLE_MAPS_API_KEY})
 @login_required
 def profile_view(request):
     return render(request, 'profile.html', {'user': request.user})
+
+
