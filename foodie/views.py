@@ -7,4 +7,5 @@ from django.shortcuts import render, get_object_or_404
 def mapView(request):
     # question = get_object_or_404(Question, pk=id)
     # return render(request, "foodie/mapView.html", {"question": question})
-    return render(request, "foodie/mapView.html")
+
+    return render(request, "foodie/mapView.html", {})
