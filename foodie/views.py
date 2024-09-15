@@ -4,7 +4,7 @@ from django.shortcuts import render, get_object_or_404
 
 # from .models import Question, Choice
 
-def mapView(request, id):
+def mapView(request):
     # question = get_object_or_404(Question, pk=id)
     # return render(request, "foodie/mapView.html", {"question": question})
     return render(request, "foodie/mapView.html")
