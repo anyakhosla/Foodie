@@ -9,7 +9,7 @@
     <ul>
         {% for restaurant in restaurants %}
             <li>
-                <a href="/foodie/{{ restaurant.pk }}/">{{ restaurant.name }} - {{ restaurant.cuisine }} ({{ restaurant.overall_rating }} stars)</a>
+                <a href="/foodie/{{ restaurant.pk }}/">{{ restaurant.name }} - {{ restaurant.cuisine }} ({{ restaurant.overall_rating }} {% if restaurant.overall_rating == 1 %}star{% else %}stars{% endif %})</a>
             </li>
         {% endfor %}
     </ul>
