@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Restaurants Nearby</title>
+</head>
+<body>
+    <h1>Restaurants Nearby</h1>
+    <ul>
+        {% for restaurant in restaurants %}
+            <li>
+                <a href="/foodie/{{ restaurant.pk }}/">{{ restaurant.name }} - {{ restaurant.cuisine }} ({{ restaurant.overall_rating }} stars)</a>
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
