@@ -14,4 +14,19 @@ def mapView(request):
 def profile_view(request):
     return render(request, 'profile.html', {'user': request.user})
 
+from django.http import JsonResponse
+from .models import Restaurant
 
+def restaurant_data(request):
+    restaurants = Restaurant.objects.all()
+    restaurant_list = []
+    for restaurant in restaurants:
+        restaurant_list.append({
+            'name': restaurant.name,
+            'cuisine': restaurant.cuisine,
+            'address': restaurant.address,
+            'latitude': restaurant.latitude,
+            'longitude': restaurant.longitude,
+            'overall_rating': restaurant.overall_rating
+        })
+    return JsonResponse({'restaurants': restaurant_list})
