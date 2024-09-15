@@ -8,9 +8,7 @@ from django.contrib.auth.decorators import login_required
 def mapView(request):
     # question = get_object_or_404(Question, pk=id)
     # return render(request, "foodie/mapView.html", {"question": question})
-
-    return render(request, "foodie/mapView.html", {})
-
+    return render(request, "foodie/mapView.html")
 @login_required
 def profile_view(request):
     return render(request, 'profile.html', {'user': request.user})
