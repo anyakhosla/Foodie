@@ -35,6 +35,7 @@ GOOGLE_MAPS_API_KEY = MAPS_API_KEY
 # Application definition
 
 INSTALLED_APPS = [
+    'accounts',
     'foodie.apps.FoodieConfig',
     'django.contrib.admin',
     'django.contrib.auth',
