@@ -1,52 +1,53 @@
-<!doctype html>
-<!--
- @license
- Copyright 2019 Google LLC. All Rights Reserved.
- SPDX-License-Identifier: Apache-2.0
--->
+<!DOCTYPE html>
 <html>
-  <head>
-    <title>Add Map</title>
-
-    <link rel="stylesheet" type="text/css" href="./style.css" />
-    <script type="module" src="./index.js"></script>
-  </head>
-  <body>
-    <h3>My Google Maps Demo</h3>
-    <!--The div element for the map -->
-    <div id="map"></div>
-
-    <!-- prettier-ignore -->
-    <script>(g=>{var h,a,k,p="The Google Maps JavaScript API",c="google",l="importLibrary",q="__ib__",m=document,b=window;b=b[c]||(b[c]={});var d=b.maps||(b.maps={}),r=new Set,e=new URLSearchParams,u=()=>h||(h=new Promise(async(f,n)=>{await (a=m.createElement("script"));e.set("libraries",[...r]+"");for(k in g)e.set(k.replace(/[A-Z]/g,t=>"_"+t[0].toLowerCase()),g[k]);e.set("callback",c+".maps."+q);a.src=`https://maps.${c}apis.com/maps/api/js?`+e;d[q]=f;a.onerror=()=>h=n(Error(p+" could not load."));a.nonce=m.querySelector("script[nonce]")?.nonce||"";m.head.append(a)}));d[l]?console.warn(p+" only loads once. Ignoring:",g):d[l]=(f,...n)=>r.add(f)&&u().then(()=>d[l](f,...n))})
-        ({key: "AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg", v: "weekly"});</script>
-
+<head>
+    <title>Atlanta Restaurants Map</title>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCzrFaPm-gAYCg4mQxq175CIRu700YbZuI
+&callback=initMap" async defer></script>
     <script>
-        let map;
+        function initMap() {
+            var atlanta = {lat: 33.7490, lng: -84.3880};
+            var map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 12,
+                center: atlanta
+            });
 
-        async function initMap() {
-        // The location of Uluru
-        const position = { lat: -25.344, lng: 131.031 };
-        // Request needed libraries.
-        //@ts-ignore
-        const { Map } = await google.maps.importLibrary("maps");
-        const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
+            var restaurants = [
+                {lat: 33.7550, lng: -84.3900, name: 'Restaurant 1'},
+                {lat: 33.7600, lng: -84.3850, name: 'Restaurant 2'},
+                {lat: 33.7450, lng: -84.3950, name: 'Restaurant 3'}
+            ];
 
-        // The map, centered at Uluru
-        map = new Map(document.getElementById("map"), {
-            zoom: 4,
-            center: position,
-            mapId: "DEMO_MAP_ID",
-        });
+            restaurants.forEach(function(restaurant) {
+                var marker = new google.maps.Marker({
+                    position: {lat: restaurant.lat, lng: restaurant.lng},
+                    map: map,
+                    title: restaurant.name
+                });
 
-        // The marker, positioned at Uluru
-        const marker = new AdvancedMarkerElement({
-            map: map,
-            position: position,
-            title: "Uluru",
-        });
+                var infoWindow = new google.maps.InfoWindow({
+                    content: '<h3>' + restaurant.name + '</h3>'
+                });
+
+                marker.addListener('click', function() {
+                    infoWindow.open(map, marker);
+                });
+            });
         }
-
-        initMap();
     </script>
-  </body>
+    <style>
+        #map {
+            height: 100%;
+        }
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Atlanta Restaurants</h1>
+    <div id="map"></div>
+</body>
 </html>
