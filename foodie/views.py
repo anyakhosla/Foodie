@@ -21,5 +21,5 @@ def restaurant_detail(request, restaurant_id):
         'restaurant': restaurant,
         'reviews': reviews,
     }
-    return render(request, 'restaurant_detail.html', context)
+    return render(request, 'foodie/restaurant_detail.html', context)
 
