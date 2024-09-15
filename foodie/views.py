@@ -7,7 +7,7 @@ def restaurant_list(request):
     context = {}
     context['restaurants'] = restaurants
 
-    return render(request, 'restaurant_list.html', context)
+    return render(request, 'foodie/restaurant_list.html', context)
 
 
 def restaurant_detail(request, restaurant_id):
