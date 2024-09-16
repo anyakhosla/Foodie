@@ -20,3 +20,7 @@ class Restaurant(models.Model):
     # ratings and reviews
     overall_rating = models.FloatField()
     reviews = models.JSONField(default=list, blank=True)
+
+    def __str__(self):
+        return f"{self.name}, {self.cuisine}"
+

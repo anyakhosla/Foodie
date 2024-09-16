@@ -1,10 +1,13 @@
 from django.urls import path
 from . import views
 
+app_name = 'foodie'
 from .views import CustomLoginView
 
 
 urlpatterns = [
+    path('', views.restaurant_list, name='restaurant_list'),
+    path('<int:restaurant_id>/', views.restaurant_detail, name='restaurant_detail'),
     path('register/', views.register, name='register'),
     #path('login/', views.login_view, name='login'),
     path('login/', CustomLoginView.as_view(), name='login'),
