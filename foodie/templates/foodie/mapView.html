@@ -1,7 +1,9 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Atlanta Restaurants Map</title>
+    <title>Atlanta Restaurant Finder</title>
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
     <script src="https://maps.googleapis.com/maps/api/js?key={{ GOOGLE_MAPS_API_KEY }}&callback=initMap" async defer></script>
     <script>
         function initMap() {
@@ -60,7 +62,7 @@
     </style>
 </head>
 <body>
-    <h1>Atlanta Restaurants</h1>
+    <h1>Atlanta Restaurant Finder</h1>
     <div id="map"></div>
 </body>
 </html>
