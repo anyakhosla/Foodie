@@ -1,29 +1,22 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
-from django.shortcuts import render, redirect
 from django.contrib import messages
-
-
+from django.http import JsonResponse
+from .models import Restaurant
 from django.contrib.auth.views import LoginView
+from django.contrib import messages
+from .forms import CustomUserCreationForm
 
 class CustomLoginView(LoginView):
     template_name = 'login.html'
-
-
 
 def mapView(request):
     # question = get_object_or_404(Question, pk=id)
     # return render(request, "foodie/mapView.html", {"question": question})
     return render(request, "foodie/mapView.html", {'GOOGLE_MAPS_API_KEY' : settings.GOOGLE_MAPS_API_KEY})
-
-
-from django.contrib.auth import login, authenticate, logout
-from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
-from django.shortcuts import render, redirect
-from django.contrib import messages
 
 # def register(request):
 #     if request.method == 'POST':
@@ -38,7 +31,6 @@ from django.contrib import messages
 #     return render(request, 'register.html', {'form': form})
 
 # myapp/views.py
-from .forms import CustomUserCreationForm
 
 def register(request):
     if request.method == 'POST':
@@ -79,9 +71,6 @@ def logout_view(request):
 def home(request):
     return render(request, 'home.html')
 
-
-from django.http import JsonResponse
-from .models import Restaurant
 
 def restaurant_data(request):
     restaurants = Restaurant.objects.all()
