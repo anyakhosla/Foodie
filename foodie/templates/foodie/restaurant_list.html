@@ -1,17 +1,27 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Restaurants Nearby</title>
+
+    <!-- Link to the same CSS used for the restaurant details page -->
+    <link rel="stylesheet" href="{% static 'restaurantPageList.css' %}">
 </head>
 <body>
-    <h1>Restaurants Nearby</h1>
-    <ul>
-        {% for restaurant in restaurants %}
-            <li>
-                <a href="/foodie/{{ restaurant.pk }}/">{{ restaurant.name }} - {{ restaurant.cuisine }} ({{ restaurant.overall_rating }} {% if restaurant.overall_rating == 1 %}star{% else %}stars{% endif %})</a>
-            </li>
-        {% endfor %}
-    </ul>
+    <div class="container">
+        <h1>Restaurants Nearby</h1>
+        <ul class="restaurant-list">
+            {% for restaurant in restaurants %}
+                <li class="restaurant-item">
+                    <a href="/foodie/{{ restaurant.pk }}/" class="restaurant-link">
+                        {{ restaurant.name }} - {{ restaurant.cuisine }} ({{ restaurant.overall_rating }} {% if restaurant.overall_rating == 1 %}star{% else %}stars{% endif %})
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
 </body>
 </html>
