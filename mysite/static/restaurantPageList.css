@@ -1,0 +1,68 @@
+/* General page styling */
+body {
+    background-color: #f0f8ff; /* Light blue background */
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    color: #424242; /* Dark gray for general text */
+}
+
+h1 {
+    font-size: 3em;
+    color: #0d47a1; /* Dark blue for the heading */
+    text-align: center;
+    margin-top: 20px;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Restaurant List Styling */
+ul.restaurant-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.restaurant-item {
+    margin: 10px 0;
+    padding: 15px;
+    background-color: #e3f2fd; /* Light blue for the item background */
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.restaurant-item:hover {
+    background-color: #bbdefb; /* Darker blue on hover */
+}
+
+.restaurant-link {
+    font-size: 1.4em;
+    text-decoration: none;
+    color: #0d47a1; /* Dark blue for links */
+    font-weight: bold;
+    display: block;
+    transition: color 0.3s ease;
+}
+
+.restaurant-link:hover {
+    color: #1e88e5; /* Lighter blue on hover */
+}
+
+/* Responsiveness */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2.5em;
+    }
+
+    .restaurant-link {
+        font-size: 1.2em;
+    }
+
+    .restaurant-item {
+        padding: 10px;
+    }
+}
