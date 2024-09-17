@@ -12,8 +12,6 @@ from django.contrib.auth.views import LoginView
 class CustomLoginView(LoginView):
     template_name = 'login.html'
 
-
-
 def mapView(request):
     # question = get_object_or_404(Question, pk=id)
     # return render(request, "foodie/mapView.html", {"question": question})
@@ -46,7 +44,8 @@ def register(request):
         if form.is_valid():
             user = form.save()
             login(request, user)
-            return redirect('map')
+            messages.success(request, f'Welcome, {username}!')
+            return redirect('mapView')
         else:
             print(form.errors)
 
@@ -65,7 +64,7 @@ def login_view(request):
             if user is not None:
                 login(request, user)
                 messages.success(request, f'Welcome, {username}!')
-                return redirect('map')
+                return redirect('mapView')
             else:
                 messages.error(request, 'Invalid username or password.')
         else:
@@ -79,9 +78,6 @@ def logout_view(request):
     messages.info(request, "You have successfully logged out.")
     return redirect('login')
 
-
-def home(request):
-    return render(request, 'home.html')
 
 
 from django.http import JsonResponse
