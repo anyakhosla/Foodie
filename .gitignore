@@ -1,2 +1,4 @@
 mysite/localSettings.py
 mysite/__pycache__/
+*.pyc
+db.sqlite3
