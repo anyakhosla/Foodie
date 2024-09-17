@@ -1,0 +1,28 @@
+body, h1 {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f9;
+}
+
+h1 {
+    background-color: #1a73e8;
+    color: white;
+    font-size: 36px;
+    text-align: center;
+    padding: 20px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+#map {
+    height: 90vh;
+    width: 100%;
+    border: 3px solid #ddd;
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.1);
+    margin: 20px auto;
+}
