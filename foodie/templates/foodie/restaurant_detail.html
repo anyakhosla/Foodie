@@ -6,6 +6,11 @@
     <title>{{ restaurant.name }}</title>
 </head>
 <body>
+    {% if restaurant.image %}
+      <img src="{{ restaurant.image.url }}" alt="{{ restaurant.name }}">
+    {% else %}
+      <p>No image available</p>
+    {% endif %}
     <h1>{{ restaurant.name }}</h1>
     <button><a href={% url 'foodie:restaurant_list' %}>Restaurant List</a></button>
     <h2>Cuisine: {{ restaurant.cuisine }}</h2>
