@@ -14,9 +14,13 @@ class Restaurant(models.Model):
     latitude = models.FloatField()
 
     # contact info
-    phone_number = models.CharField(max_length=15)
-    website = models.CharField(max_length=300)
+    phone_number = models.CharField(max_length=15, null=True, blank=True)
+    website = models.URLField(max_length=300, null=True, blank=True)
 
     # ratings and reviews
     overall_rating = models.FloatField()
     reviews = models.JSONField(default=list, blank=True)
+
+
+    def __str__(self):
+        return f"{self.name}"

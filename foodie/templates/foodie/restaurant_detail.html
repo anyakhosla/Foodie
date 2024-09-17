@@ -1,0 +1,28 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ restaurant.name }}</title>
+</head>
+<body>
+    <h1>{{ restaurant.name }}</h1>
+    <button><a href={% url 'foodie:restaurant_list' %}>Restaurant List</a></button>
+    <h2>Cuisine: {{ restaurant.cuisine }}</h2>
+    <p><strong>{{ restaurant.overall_rating }} {% if restaurant.overall_rating == 1 %}Star{% else %}Stars{% endif %}</strong></p>
+
+    <br>
+
+    <p><strong>Address: </strong>{{ restaurant.address }}</p>
+    <p><strong>Phone Number: </strong>{{ restaurant.phone_number }}</p>
+    <p><strong>Website: </strong>{{ restaurant.website }}</p>
+
+    <p><strong>Reviews:</strong></p>
+    {% for review in reviews %}
+        <p><strong>{{ review.rating }} {% if review.rating == 1 %}star{% else %}stars{% endif %}</strong> - {{ review.author_name }}</p>
+        <p style="text-indent: 20px;">{{ review.text }}</p>
+    {% empty %}
+        <p>No reviews available</p>
+    {% endfor %}
+</body>
+</html>

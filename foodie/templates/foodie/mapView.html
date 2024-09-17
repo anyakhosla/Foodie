@@ -14,7 +14,7 @@
             });
 
             // Fetch restaurant data from Django view
-            fetch('/restaurant-data/')
+            fetch('restaurant-data/')
                 .then(response => response.json())
                 .then(data => {
                     var restaurants = data.restaurants;
