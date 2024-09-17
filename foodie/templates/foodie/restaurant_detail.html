@@ -10,12 +10,10 @@
 </head>
 <body>
     <h1>{{ restaurant.name }}</h1>
-    <button><a href={% url 'foodie:restaurant_list' %}>Restaurant List</a></button>
+    <div class = "buttonDiv"><button><a href={% url 'foodie:restaurant_list' %}>Restaurant List</a></button></div>
+    <br>
     <h2>Cuisine: {{ restaurant.cuisine }}</h2>
     <p><strong>{{ restaurant.overall_rating }} {% if restaurant.overall_rating == 1 %}Star{% else %}Stars{% endif %}</strong></p>
-
-    <br>
-
     <p><strong>Address: </strong>{{ restaurant.address }}</p>
     <p><strong>Phone Number: </strong>{{ restaurant.phone_number }}</p>
     <p><strong>Website: </strong><a href="{{ restaurant.website }}" target="_blank">{{ restaurant.website }}</a></p>

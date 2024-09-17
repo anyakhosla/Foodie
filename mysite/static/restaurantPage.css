@@ -12,12 +12,31 @@ h1 {
     color: #0d47a1; /* Dark blue for the restaurant name */
     text-align: center;
     margin-top: 20px;
+    margin-bottom: 5px;
 }
 
 h2 {
     font-size: 1.8em;
     color: #1e88e5; /* Slightly lighter blue for cuisine */
     text-align: center;
+}
+
+
+.buttonDiv {
+    color: #1e88e5; /* for the button */
+    text-align: center;
+    text-decoration: underline;
+    background-color: transparent;
+}
+
+button {
+    font-size: 1.2em;
+    background-color: transparent;
+    border: 1px solid #3498db;
+    box-shadow: 0 6px 6px rgba(0, 0, 0, 0.6);
+    a:hover {
+        text-decoration: none;
+    }
 }
 
 p {
