@@ -1,0 +1,97 @@
+/* General page styling */
+body {
+    background-color: #f0f8ff; /* Light blue background */
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    color: #424242; /* Dark gray for general text */
+}
+
+h1 {
+    font-size: 3em;
+    color: #0d47a1; /* Dark blue for the restaurant name */
+    text-align: center;
+    margin-top: 20px;
+}
+
+h2 {
+    font-size: 1.8em;
+    color: #1e88e5; /* Slightly lighter blue for cuisine */
+    text-align: center;
+}
+
+p {
+    font-size: 1.2em;
+    color: #616161; /* Gray for the paragraph text */
+    line-height: 1.6em;
+    margin: 10px auto;
+    max-width: 800px;
+    text-align: center;
+}
+
+strong {
+    color: #0d47a1; /* Dark blue for emphasis */
+}
+
+/* Address, Phone Number, Website Styling */
+p strong {
+    font-size: 1.2em;
+}
+
+a {
+    color: #1e88e5;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Review Section */
+p strong {
+    color: #0d47a1; /* Dark blue for review stars */
+    font-size: 1.1em;
+}
+
+.review-text {
+    font-size: 1em;
+    text-indent: 20px;
+    max-width: 800px;
+    margin: 5px auto;
+    text-align: justify;
+    color: #424242; /* Dark gray for review text */
+}
+
+.review-container {
+    background-color: #e3f2fd; /* Light blue for review background */
+    padding: 15px;
+    margin: 20px auto;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 800px;
+}
+
+/* Star Rating Styling */
+.star-rating {
+    font-size: 1.2em;
+    color: #ffb400; /* Gold color for stars */
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2.2em;
+    }
+
+    h2 {
+        font-size: 1.5em;
+    }
+
+    p {
+        font-size: 1em;
+    }
+
+    .review-container {
+        padding: 10px;
+    }
+}
