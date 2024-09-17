@@ -7,7 +7,7 @@ import django
 django.setup()
 
 from foodie.models import Restaurant
-from foodie.localSettings import MAPS_API_KEY
+from mysite.localSettings import MAPS_API_KEY
 
 import requests
 import time
