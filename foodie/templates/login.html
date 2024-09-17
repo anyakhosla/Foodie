@@ -17,8 +17,16 @@
             <div class="d-grid">
                 <button type="submit" class="btn btn-primary">Login</button>
             </div>
-            {% if error %}
-                <p style="color:red;">{{ error }}</p>
+
+            <!-- Display form errors -->
+            {% if form.errors %}
+                <div class="alert alert-danger mt-3">
+                    <ul>
+                        {% for field, errors in form.errors.items %}
+                            <li>{{ field }}: {{ errors|striptags }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
             {% endif %}
         </form>
     </div>
