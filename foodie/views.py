@@ -16,6 +16,9 @@ from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.shortcuts import render, redirect
 from django.contrib import messages
 
+from django.http import JsonResponse
+from .models import Restaurant
+
 # def register(request):
 #     if request.method == 'POST':
 #         form = UserCreationForm(request.POST)
@@ -36,8 +39,6 @@ class CustomLoginView(LoginView):
 
 
 def mapView(request):
-    # question = get_object_or_404(Question, pk=id)
-    # return render(request, "foodie/mapView.html", {"question": question})
     return render(request, "foodie/mapView.html", {'GOOGLE_MAPS_API_KEY' : settings.GOOGLE_MAPS_API_KEY})
 
 
@@ -80,9 +81,6 @@ def logout_view(request):
 def home(request):
     return render(request, 'home.html')
 
-
-from django.http import JsonResponse
-from .models import Restaurant
 
 def restaurant_data(request):
     restaurants = Restaurant.objects.all()
