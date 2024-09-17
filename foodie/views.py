@@ -44,8 +44,12 @@ def register(request):
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
-            form.save()
-            # Additional logic...
+            user = form.save()
+            login(request, user)
+            return redirect('map')
+        else:
+            print(form.errors)
+
     else:
         form = CustomUserCreationForm()
     return render(request, 'register.html', {'form': form})
@@ -61,7 +65,7 @@ def login_view(request):
             if user is not None:
                 login(request, user)
                 messages.success(request, f'Welcome, {username}!')
-                return redirect('home')
+                return redirect('map')
             else:
                 messages.error(request, 'Invalid username or password.')
         else:

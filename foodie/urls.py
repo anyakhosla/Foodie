@@ -11,7 +11,7 @@ urlpatterns = [
     path('logout/', views.logout_view, name='logout'),
     path('', views.home, name='home'),  # Add your home view if needed
     # ... other URL patterns ...
-    path("map", views.mapView, name = "mapView"),
+    path('map', views.mapView, name = "mapView"),
     path('restaurant-data/', views.restaurant_data, name='restaurant_data'),
 ]
 
