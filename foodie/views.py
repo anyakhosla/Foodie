@@ -94,7 +94,8 @@ def restaurant_data(request):
             'address': restaurant.address,
             'latitude': restaurant.latitude,
             'longitude': restaurant.longitude,
-            'overall_rating': restaurant.overall_rating
+            'overall_rating': restaurant.overall_rating,
+            'id': restaurant.id,
         })
     return JsonResponse({'restaurants': restaurant_list})
 

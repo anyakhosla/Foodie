@@ -27,14 +27,14 @@
                         });
 
                         var infoWindowContent = '<div style="font-family: Arial, sans-serif; font-size: 14px;">' +
-                            '<h3 style="margin-bottom: 5px;">' + restaurant.name + '</h3>' +
-                            '<p><strong>Address:</strong> ' + restaurant.address + '</p>' +
-                            '<p><strong>Cuisine Type:</strong> ' + restaurant.cuisine + '</p>' +
-                            '<p><strong>Rating:</strong> ' + restaurant.overall_rating + ' / 5</p>' +
-                            '<a href="https://www.google.com/maps/dir/?api=1&destination=' + encodeURIComponent(restaurant.address) + '" ' +
-                            'target="_blank" ' +
-                            'style="color: #1a73e8; text-decoration: none; font-weight: bold;">Get Directions</a>' +
-                            '</div>';
+                        '<h3 style="margin-bottom: 5px;"><a href="http://127.0.0.1:8000/foodie/' + restaurant.id + '/" target="_blank" style="color: #1a73e8; text-decoration: none;">' + restaurant.name + '</a></h3>' +
+                        '<p><strong>Address:</strong> ' + restaurant.address + '</p>' +
+                        '<p><strong>Cuisine Type:</strong> ' + restaurant.cuisine + '</p>' +
+                        '<p><strong>Rating:</strong> ' + restaurant.overall_rating + ' / 5</p>' +
+                        '<a href="https://www.google.com/maps/dir/?api=1&destination=' + encodeURIComponent(restaurant.address) + '" ' +
+                        'target="_blank" ' +
+                        'style="color: #1a73e8; text-decoration: none; font-weight: bold;">Get Directions</a>' +
+                        '</div>';
 
                         var infoWindow = new google.maps.InfoWindow({
                             content: infoWindowContent
