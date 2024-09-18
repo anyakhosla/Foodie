@@ -27,6 +27,12 @@ h2 {
     text-align: center;
     text-decoration: underline;
     background-color: transparent;
+    display: inline-block;
+}
+
+.buttonsContainer {
+    text-align: center;
+    padding: 20px;
 }
 
 button {
