@@ -133,6 +133,6 @@ STATICFILES_DIRS = [
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-LOGIN_REDIRECT_URL = 'mapView'
-LOGOUT_REDIRECT_URL = 'login'
+LOGIN_REDIRECT_URL = 'foodie:mapView'
+LOGOUT_REDIRECT_URL = 'foodie:login'
 
