@@ -9,22 +9,25 @@
         function initMap() {
             var atlanta = {lat: 33.7490, lng: -84.3880};
             var map = new google.maps.Map(document.getElementById('map'), {
-                zoom: 12,
+                zoom: 13,
                 center: atlanta
             });
 
-            // Fetch restaurant data from Django view
             fetch('restaurant-data/')
                 .then(response => response.json())
                 .then(data => {
                     var restaurants = data.restaurants;
+                    var bounds = new google.maps.LatLngBounds();
 
                     restaurants.forEach(function(restaurant) {
+                        var position = new google.maps.LatLng(restaurant.latitude, restaurant.longitude);
                         var marker = new google.maps.Marker({
-                            position: {lat: restaurant.latitude, lng: restaurant.longitude},
+                            position: position,
                             map: map,
                             title: restaurant.name
                         });
+
+                        bounds.extend(position);
 
                         var infoWindowContent = '<div style="font-family: Arial, sans-serif; font-size: 14px;">' +
                         '<h3 style="margin-bottom: 5px;"><a href="http://127.0.0.1:8000/foodie/' + restaurant.id + '/" target="_blank" style="color: #1a73e8; text-decoration: none;">' + restaurant.name + '</a></h3>' +
@@ -39,11 +42,8 @@
                         var infoWindow = new google.maps.InfoWindow({
                             content: infoWindowContent
                         });
-
-                        marker.addListener('click', function() {
-                            infoWindow.open(map, marker);
-                        });
                     });
+                    map.fitBounds(bounds);
                 })
                 .catch(error => {
                     console.error('Error fetching restaurant data:', error);
