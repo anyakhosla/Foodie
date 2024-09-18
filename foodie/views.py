@@ -44,7 +44,6 @@ def register(request):
         if form.is_valid():
             user = form.save()
             login(request, user)
-            messages.success(request, f'Welcome, {username}!')
             return redirect('mapView')
         else:
             print(form.errors)
