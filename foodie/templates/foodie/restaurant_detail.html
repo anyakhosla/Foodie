@@ -9,6 +9,9 @@
     <link rel="stylesheet" href="{% static 'restaurantPage.css' %}">
 </head>
 <body>
+    {% if restaurant.image %}
+        <img src="{{ restaurant.image.url }}" alt="{{ restaurant.name }} image" class="restaurant-image">
+    {% endif %}
     <h1>{{ restaurant.name }}</h1>
     <div class = "buttonDiv"><button><a href={% url 'foodie:restaurant_list' %}>Restaurant List</a></button></div>
     <br>
