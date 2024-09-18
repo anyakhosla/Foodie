@@ -21,7 +21,6 @@ h2 {
     text-align: center;
 }
 
-
 .buttonDiv {
     color: #1e88e5; /* for the button */
     text-align: center;
@@ -102,6 +101,17 @@ p strong {
     color: #ffb400; /* Gold color for stars */
 }
 
+/* Image Styling for Restaurant List */
+.restaurant-image {
+    width: 100px;
+    height: 100px;
+    object-fit: cover; /* Ensures image is properly fitted */
+    margin-right: 10px;
+    border-radius: 5px; /* Optional rounded corners for images */
+    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.2); /* Light shadow around the image */
+    vertical-align: middle;
+}
+
 /* Mobile responsiveness */
 @media (max-width: 768px) {
     h1 {
@@ -119,4 +129,24 @@ p strong {
     .review-container {
         padding: 10px;
     }
+
+    .restaurant-image {
+        width: 75px; /* Smaller images on mobile */
+        height: 75px;
+    }
 }
+
+.image-container {
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    height: 300px; /* Adjust height as needed */
+    overflow: hidden; /* Hide overflowed parts of the image */
+}
+
+.restaurant-image {
+    height: 100%; /* Adjust to fill the container height */
+    object-fit: cover; /* Ensures the image covers the container without distortion */
+    width: auto; /* Maintain aspect ratio */
+}
+

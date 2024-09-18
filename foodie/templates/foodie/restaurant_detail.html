@@ -1,18 +1,44 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-<head>
+<head> <!--TECH DEBT: put the lines below in a css file-->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ restaurant.name }}</title>
 
     <link rel="stylesheet" href="{% static 'restaurantPage.css' %}">
+    <style>
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #333;
+            padding: 10px;
+        }
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            padding: 14px 20px;
+        }
+        /* .navbar a:hover {
+            background-color: #ddd;
+            color: black;
+        } */
+    </style>
 </head>
 <body>
-    <div class = "buttonsContainer">
-        <div class = "buttonDiv"><button><a href={% url 'foodie:restaurant_list' %}>Restaurant List</a></button></div>
-        <div class = "buttonDiv"><button><a href={% url 'foodie:mapView' %}>Back to Map</a></button></div>
+    <div class="navbar">
+        <div class="nav-left">
+            <a href="{% url 'foodie:restaurant_list' %}">Restaurant List</a>
+            <a href="{% url 'foodie:mapView' %}">Back to Map</a>
+        </div>
+        <div class="nav-right">
+            {% if restaurant.image %}
+                <img src="{{ restaurant.image.url }}" alt="{{ restaurant.name }} image" class="restaurant-image" style="height: 50px;">
+            {% endif %}
+        </div>
     </div>
+
     <h1>{{ restaurant.name }}</h1>
     <h2>Cuisine: {{ restaurant.cuisine }}</h2>
     <p><strong>{{ restaurant.overall_rating }} {% if restaurant.overall_rating == 1 %}Star{% else %}Stars{% endif %}</strong></p>
