@@ -21,7 +21,7 @@ from django.shortcuts import redirect
 
 urlpatterns = [
     path('foodie/', include('foodie.urls')),
-    path('', lambda request: redirect('foodie/map', permanent=True)),
+    path('', lambda request: redirect('foodie/register/', permanent=True)),
     path('admin/', admin.site.urls),
     path("foodie/", include("foodie.urls")),
 ]
