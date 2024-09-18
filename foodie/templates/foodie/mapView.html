@@ -9,7 +9,7 @@
         function initMap() {
             var atlanta = {lat: 33.7490, lng: -84.3880};
             var map = new google.maps.Map(document.getElementById('map'), {
-                zoom: 13,
+                zoom: 14,
                 center: atlanta
             });
 
@@ -42,8 +42,19 @@
                         var infoWindow = new google.maps.InfoWindow({
                             content: infoWindowContent
                         });
+
+                        marker.addListener('click', function() {
+                            infoWindow.open(map, marker);
+                        });
                     });
+
+
                     map.fitBounds(bounds);
+
+                    var listener = google.maps.event.addListener(map, "idle", function() { 
+                        if (map.getZoom() > 14) map.setZoom(14); 
+                        google.maps.event.removeListener(listener); 
+                    });
                 })
                 .catch(error => {
                     console.error('Error fetching restaurant data:', error);
