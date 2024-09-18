@@ -13,6 +13,8 @@
                 center: atlanta
             });
 
+            var currentInfoWindow = null;
+
             fetch('restaurant-data/')
                 .then(response => response.json())
                 .then(data => {
@@ -44,7 +46,11 @@
                         });
 
                         marker.addListener('click', function() {
+                            if (currentInfoWindow) {
+                                currentInfoWindow.close();
+                            }
                             infoWindow.open(map, marker);
+                            currentInfoWindow = infoWindow;
                         });
                     });
 
