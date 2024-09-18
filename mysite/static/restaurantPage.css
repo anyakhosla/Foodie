@@ -26,6 +26,12 @@ h2 {
     text-align: center;
     text-decoration: underline;
     background-color: transparent;
+    display: inline-block;
+}
+
+.buttonsContainer {
+    text-align: center;
+    padding: 20px;
 }
 
 button {
@@ -129,3 +135,18 @@ p strong {
         height: 75px;
     }
 }
+
+.image-container {
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    height: 300px; /* Adjust height as needed */
+    overflow: hidden; /* Hide overflowed parts of the image */
+}
+
+.restaurant-image {
+    height: 100%; /* Adjust to fill the container height */
+    object-fit: cover; /* Ensures the image covers the container without distortion */
+    width: auto; /* Maintain aspect ratio */
+}
+

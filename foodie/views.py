@@ -48,8 +48,7 @@ def register(request):
         if form.is_valid():
             user = form.save()
             login(request, user)
-            # messages.success(request, f'Welcome, {username}!')
-            return redirect('mapView')
+            return redirect('foodie:mapView')
         else:
             print(form.errors)
 
@@ -68,7 +67,7 @@ def login_view(request):
             if user is not None:
                 login(request, user)
                 messages.success(request, f'Welcome, {username}!')
-                return redirect('mapView')
+                # go to settings.py to change redirect behavior after login
             else:
                 messages.error(request, 'Invalid username or password.')
         else:
@@ -80,7 +79,7 @@ def login_view(request):
 def logout_view(request):
     logout(request)
     messages.info(request, "You have successfully logged out.")
-    return redirect('login')
+    return redirect('foodie:login')
 
 
 
