@@ -32,12 +32,13 @@
             <a href="{% url 'foodie:restaurant_list' %}">Restaurant List</a>
             <a href="{% url 'foodie:mapView' %}">Back to Map</a>
         </div>
-        <div class="nav-right">
-            {% if restaurant.image %}
-                <img src="{{ restaurant.image.url }}" alt="{{ restaurant.name }} image" class="restaurant-image" style="height: 50px;">
-            {% endif %}
-        </div>
     </div>
+
+    {% if restaurant.image %}
+        <div class="image-container"></div>
+            <img src="{{ restaurant.image.url }}" alt="{{ restaurant.name }} image" class="restaurant-image" style="height: 50px;">
+        </div>
+    {% endif %}
 
     <h1>{{ restaurant.name }}</h1>
     <h2>Cuisine: {{ restaurant.cuisine }}</h2>
