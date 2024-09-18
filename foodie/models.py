@@ -21,6 +21,8 @@ class Restaurant(models.Model):
     overall_rating = models.FloatField()
     reviews = models.JSONField(default=list, blank=True)
 
+    image = models.ImageField(upload_to='restaurant_images/', null=True, blank=True)
+
 
     def __str__(self):
         return f"{self.name}"
