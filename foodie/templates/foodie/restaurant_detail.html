@@ -45,7 +45,7 @@
     <p><strong>{{ restaurant.overall_rating }} {% if restaurant.overall_rating == 1 %}Star{% else %}Stars{% endif %}</strong></p>
     <p><strong>Address: </strong>{{ restaurant.address }}</p>
     <p><strong>Phone Number: </strong>{{ restaurant.phone_number }}</p>
-    <p><strong>Website: </strong><a href="{{ restaurant.website }}" target="_blank">{{ restaurant.website }}</a></p>
+    <p><strong>Website: </strong><a href="{{ restaurant.website }}" target="_blank">{{ restaurant.website }}</a></p> <!--TECH DEBT: if the url is too long, ellipses should be added-->
 
     <p><strong>Reviews:</strong></p>
     {% for review in reviews %}
