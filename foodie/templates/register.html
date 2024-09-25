@@ -34,6 +34,18 @@
                 {{ form.password2.label_tag }}
                 {{ form.password2 }}
             </div>
+            <div class="mb-3">
+                {{ form.address.label_tag }}
+                {{ form.address }}
+            </div>
+            <div class="mb-3">
+                {{ form.city.label_tag }}
+                {{ form.city }}
+            </div>
+            <div class="mb-3">
+                {{ form.zip_code.label_tag }}
+                {{ form.zip_code }}
+            </div>
             <div class="d-grid">
                 <button type="submit" class="btn btn-primary">Register</button> <!--TECH DEBT: put css for line below in a css file eventually -->
                 <a style="margin-top:5px; text-align: center" href={% url 'foodie:login' %}>Already have an account? Login</a>
