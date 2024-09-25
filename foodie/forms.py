@@ -1,13 +1,21 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
+from django.core.validators import RegexValidator
 
 class CustomUserCreationForm(UserCreationForm):
     email = forms.EmailField(required=True)
+    address = forms.CharField(max_length=200, required=True)
+    city = forms.CharField(max_length=100, required=True)
+    zip_code = forms.CharField(
+        max_length=5,
+        required=True,
+        validators=[RegexValidator(regex='^\d{5}$', message='Zip code must be exactly 5 digits.')]
+    )
 
     class Meta:
         model = User
-        fields = ("username", "email", "password1", "password2")
+        fields = ("username", "email", "password1", "password2", 'address', 'city', 'zip_code')
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

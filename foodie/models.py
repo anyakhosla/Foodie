@@ -32,7 +32,7 @@ class User(models.Model):
 
     # address info
     address = models.CharField(max_length=200)
-    street = models.CharField(max_length=100)
+    city = models.CharField(max_length=100)
     zip_code = models.CharField(max_length=10)
 
     favorite_restaurants = models.ManyToManyField(Restaurant, related_name='favorited_by', blank=True) # restaurants can get people that favorited them with the related_name field
