@@ -1,3 +1,4 @@
+from django.contrib.auth.models import AbstractUser
 from django.db import models
 
 class Restaurant(models.Model):
@@ -27,7 +28,7 @@ class Restaurant(models.Model):
     def __str__(self):
         return f"{self.name}"
 
-class User(models.Model):
+class CustomUser(AbstractUser):
     name = models.CharField(max_length=200)
 
     # address info
