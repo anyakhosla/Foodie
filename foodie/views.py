@@ -82,7 +82,6 @@ def logout_view(request):
     return redirect('foodie:login')
 
 
-
 def restaurant_data(request):
     restaurants = Restaurant.objects.all()
     restaurant_list = []
@@ -121,3 +120,8 @@ def restaurant_detail(request, restaurant_id):
         'reviews': reviews,
     }
     return render(request, 'foodie/restaurant_detail.html', context)
+
+def user_profile_page(request): # add user id parameter
+    # add logic to check if user is signed in
+    # current_user = get_object_or_404(User, pk=user_id)
+    return render(request, "foodie/userPage.html") # return render(request, "foodie/userPage.html", {'user_id' : user_id})
