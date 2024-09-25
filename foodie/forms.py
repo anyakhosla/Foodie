@@ -12,10 +12,15 @@ class CustomUserCreationForm(UserCreationForm):
         required=True,
         validators=[RegexValidator(regex='^\d{5}$', message='Zip code must be exactly 5 digits.')]
     )
+    phone_number = forms.CharField(
+        max_length=10,
+        required=True,
+        validators=[RegexValidator(regex='^\d{10}$', message='Phone number must be exactly 10 digits.')]
+    )
 
     class Meta:
         model = User
-        fields = ("username", "email", "password1", "password2", 'address', 'city', 'zip_code')
+        fields = ("username", "email", "password1", "password2", 'address', 'city', 'zip_code', 'phone_number')
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -27,6 +32,12 @@ class CustomUserCreationForm(UserCreationForm):
         if User.objects.filter(username=username).exists():
             raise forms.ValidationError("Username already exists")
         return username
+    
+    def clean_phone_number(self):
+        phone_number = self.cleaned_data.get('phone_number')
+        if len(phone_number) != 10:
+            raise forms.ValidationError("Phone number must be exactly 10 digits.")
+        return phone_number
 
     def save(self, commit=True):
         user = super().save(commit=False)
