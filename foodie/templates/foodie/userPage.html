@@ -1,0 +1,23 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <link rel="stylesheet" href="{% static 'userPage.css' %}">
+</head>
+<body>
+    <div class="profile-container">
+	<h1> User Profile </h1>
+        <!-- <img src="profile-picture.jpg" alt="User Profile Picture"> -->
+        <h2>John Doe</h2>
+        <div class="info">
+            <p><strong>Email:</strong> john.doe@gatech.edu</p>
+            <p><strong>Location:</strong> Atlanta, GA</p>
+            <p><strong>Bio:</strong> Full-stack developer with a passion for creating beautiful and functional websites.</p>
+            <p><strong>Address:</strong> 351 Ferst Drive NW, Atlanta, GA 30332</p>
+        </div>
+    </div>
+</body>
+</html>

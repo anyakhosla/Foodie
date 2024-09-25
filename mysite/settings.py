@@ -14,6 +14,8 @@ from pathlib import Path
 
 from .localSettings import MAPS_API_KEY
 
+import os
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -133,6 +135,10 @@ STATICFILES_DIRS = [
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-LOGIN_REDIRECT_URL = 'mapView'
-LOGOUT_REDIRECT_URL = 'login'
+LOGIN_REDIRECT_URL = 'foodie:mapView'
+LOGOUT_REDIRECT_URL = 'foodie:login'
+
+# MEDIA settings
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
