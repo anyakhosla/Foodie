@@ -71,16 +71,15 @@ def restaurant_data(request):
     return JsonResponse({'restaurants': restaurant_list})
 
 def restaurant_list(request):
-    query = request.GET.get('q', '')  # Get search query from GET request
+    query = request.GET.get('q', '')
     if query:
-        # Search across restaurant name and cuisine fields
         restaurants = Restaurant.objects.filter(Q(name__icontains=query) | Q(cuisine__icontains=query))
     else:
-        restaurants = Restaurant.objects.all()  # Default to all restaurants if no search query
+        restaurants = Restaurant.objects.all()
 
     context = {
         'restaurants': restaurants,
-        'query': query,  # Pass the search query to the template
+        'query': query,
     }
     return render(request, 'foodie/restaurant_list.html', context)
 
