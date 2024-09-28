@@ -38,10 +38,6 @@ def mapView(request):
 #     template_name = 'login.html'
 
 
-def mapView(request):
-    return render(request, "foodie/mapView.html", {'GOOGLE_MAPS_API_KEY' : settings.GOOGLE_MAPS_API_KEY})
-
-
 def register(request):
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
