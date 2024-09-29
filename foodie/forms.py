@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.models import User
 from django.core.validators import RegexValidator
+from .models import CustomUser
 
 class CustomUserCreationForm(UserCreationForm):
     email = forms.EmailField(required=True)
@@ -19,8 +19,8 @@ class CustomUserCreationForm(UserCreationForm):
     )
 
     class Meta:
-        model = User
-        fields = ("username", "email", "password1", "password2", 'address', 'city', 'zip_code', 'phone_number')
+        model = CustomUser
+        fields = ("username", "name", "email", "password1", "password2", 'address', 'city', 'zip_code', 'phone_number')
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -29,7 +29,7 @@ class CustomUserCreationForm(UserCreationForm):
 
     def clean_username(self):
         username = self.cleaned_data.get('username')
-        if User.objects.filter(username=username).exists():
+        if CustomUser.objects.filter(username=username).exists():
             raise forms.ValidationError("Username already exists")
         return username
     
