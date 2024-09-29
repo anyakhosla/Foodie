@@ -19,6 +19,7 @@ urlpatterns = [
     # ... other URL patterns ...
     path("map/", views.mapView, name = "mapView"),
     path('map/restaurant-data/', views.restaurant_data, name='restaurant_data'),
+    path('filter_restaurants/', views.filter_restaurants, name='filter_restaurants'),
     path('user/', views.user_profile_page, name='user_profile_page')
 ]
 
