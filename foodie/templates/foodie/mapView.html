@@ -6,80 +6,154 @@
     <link rel="stylesheet" href="{% static 'styles.css' %}">
     <script src="https://maps.googleapis.com/maps/api/js?key={{ GOOGLE_MAPS_API_KEY }}&callback=initMap" async defer></script>
     <script>
+        var map;
+        var currentInfoWindow;
+        var markers = [];
+        var atlantaCenter = {lat: 33.7490, lng: -84.3880};
+
         function initMap() {
-            var atlanta = {lat: 33.7490, lng: -84.3880};
-            var map = new google.maps.Map(document.getElementById('map'), {
+            map = new google.maps.Map(document.getElementById('map'), {
                 zoom: 14,
-                center: atlanta
+                center: atlantaCenter
             });
 
-            var currentInfoWindow = null;
+            currentInfoWindow = null;
 
-            fetch('restaurant-data/')
+            // Add a marker for the center of Atlanta
+            new google.maps.Marker({
+                position: atlantaCenter,
+                map: map,
+                title: "Center of Atlanta",
+                icon: {
+                    url: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png"
+                }
+            });
+
+            // Call fetchRestaurants with default values on initial load
+            fetchRestaurants();
+        }
+
+        function fetchRestaurants(minRating = 1, maxDistance = 20) {
+            const url = `/foodie/filter_restaurants/?min_rating=${minRating}&max_distance=${maxDistance}`;
+            fetch(url)
                 .then(response => response.json())
                 .then(data => {
-                    var restaurants = data.restaurants;
-                    var bounds = new google.maps.LatLngBounds();
-
-                    restaurants.forEach(function(restaurant) {
-                        var position = new google.maps.LatLng(restaurant.latitude, restaurant.longitude);
-                        var marker = new google.maps.Marker({
-                            position: position,
-                            map: map,
-                            title: restaurant.name
-                        });
-
-                        bounds.extend(position);
-
-                        var infoWindowContent = '<div style="font-family: Arial, sans-serif; font-size: 14px;">' +
-                        '<h3 style="margin-bottom: 5px;"><a href="http://127.0.0.1:8000/foodie/' + restaurant.id + '/" target="_blank" style="color: #1a73e8; text-decoration: none;">' + restaurant.name + '</a></h3>' +
-                        '<p><strong>Address:</strong> ' + restaurant.address + '</p>' +
-                        '<p><strong>Cuisine Type:</strong> ' + restaurant.cuisine + '</p>' +
-                        '<p><strong>Rating:</strong> ' + restaurant.overall_rating + ' / 5</p>' +
-                        '<a href="https://www.google.com/maps/dir/?api=1&destination=' + encodeURIComponent(restaurant.address) + '" ' +
-                        'target="_blank" ' +
-                        'style="color: #1a73e8; text-decoration: none; font-weight: bold;">Get Directions</a>' +
-                        '</div>';
-
-                        var infoWindow = new google.maps.InfoWindow({
-                            content: infoWindowContent
-                        });
-
-                        marker.addListener('click', function() {
-                            if (currentInfoWindow) {
-                                currentInfoWindow.close();
-                            }
-                            infoWindow.open(map, marker);
-                            currentInfoWindow = infoWindow;
-                        });
-                    });
-
-
-                    map.fitBounds(bounds);
-
-                    var listener = google.maps.event.addListener(map, "idle", function() { 
-                        if (map.getZoom() > 14) map.setZoom(14); 
-                        google.maps.event.removeListener(listener); 
-                    });
+                    clearMarkers(); // Clear existing markers
+                    addMarkers(data.restaurants);
                 })
                 .catch(error => {
                     console.error('Error fetching restaurant data:', error);
                 });
         }
+
+        function addMarkers(restaurants) {
+            var bounds = new google.maps.LatLngBounds();
+            bounds.extend(atlantaCenter); // Include Atlanta center in bounds
+
+            restaurants.forEach(function(restaurant) {
+                var position = new google.maps.LatLng(restaurant.latitude, restaurant.longitude);
+                var marker = new google.maps.Marker({
+                    position: position,
+                    map: map,
+                    title: restaurant.name
+                });
+
+                markers.push(marker); // Store markers
+
+                bounds.extend(position);
+
+                var infoWindowContent = '<div style="font-family: Arial, sans-serif; font-size: 14px;">' +
+                    '<h3 style="margin-bottom: 5px;"><a href="/foodie/' + restaurant.id + '/" target="_blank" style="color: #1a73e8; text-decoration: none;">' + restaurant.name + '</a></h3>' +
+                    '<p><strong>Address:</strong> ' + restaurant.address + '</p>' +
+                    '<p><strong>Cuisine Type:</strong> ' + restaurant.cuisine + '</p>' +
+                    '<p><strong>Rating:</strong> ' + restaurant.overall_rating + ' / 5</p>' +
+                    '<p><strong>Distance:</strong> ' + restaurant.distance + ' miles</p>' +
+                    '<p><strong>Phone:</strong> ' + restaurant.phone_number + '</p>' +
+                    '<p><a style="text-decoration: none;" href="' + restaurant.website + '"> Restaurant Website</a></p>' +
+                    '<a href="https://www.google.com/maps/dir/?api=1&destination=' + encodeURIComponent(restaurant.address) + '" ' +
+                    'target="_blank" ' +
+                    'style="color: #1a73e8; text-decoration: none; font-weight: bold;">Get Directions</a>' +
+                    '</div>';
+
+                var infoWindow = new google.maps.InfoWindow({
+                    content: infoWindowContent
+                });
+
+                marker.addListener('click', function() {
+                    if (currentInfoWindow) {
+                        currentInfoWindow.close();
+                    }
+                    infoWindow.open(map, marker);
+                    currentInfoWindow = infoWindow;
+                });
+            });
+
+            map.fitBounds(bounds);
+        }
+
+        function clearMarkers() {
+            markers.forEach(marker => {
+                marker.setMap(null);
+            });
+            markers = []; // Reset the markers array
+        }
+
+        function applyFilters() {
+            const minRating = document.getElementById('min-rating').value;
+            const maxDistance = document.getElementById('max-distance').value;
+            fetchRestaurants(minRating, maxDistance);
+        }
     </script>
     <style>
         #map {
-            height: 100%;
+            position: absolute;
+            top: 60px; /* Below header */
+            left: 220px; /* Next to sidebar */
+            right: 0;
+            bottom: 0;
+        }
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 60px; /* Below header */
+            width: 200px; /* Width of the sidebar */
+            height: calc(100% - 60px); /* Full height minus header */
+            background-color: white; /* Background for sidebar */
+            padding: 10px; /* Padding for sidebar */
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2); /* Sidebar shadow */
+            z-index: 1; /* Ensure the sidebar is above the map */
         }
         html, body {
             height: 100%;
             margin: 0;
             padding: 0;
         }
+        h1 {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 60px;
+            margin: 0;
+            padding: 10px;
+            background-color: #007bff; /* Blue color for header */
+            color: white;
+            z-index: 2;
+        }
     </style>
 </head>
 <body>
     <h1>Atlanta Restaurant Finder</h1>
+    <div class="sidebar">
+        <h2>Filter Restaurants</h2>
+        <label for="min-rating">Min Rating:</label>
+        <input type="number" id="min-rating" value="1" min="1" max="5" step="0.1">
+        <br><br>
+        <label for="max-distance">Max Distance (miles):</label>
+        <input type="number" id="max-distance" value="20" min="1" max="100">
+        <br><br>
+        <button onclick="applyFilters()">Apply Filters</button>
+    </div>
     <div id="map"></div>
 </body>
 </html>
