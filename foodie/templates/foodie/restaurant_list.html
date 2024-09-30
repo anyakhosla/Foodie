@@ -7,12 +7,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Foodie: Restaurants Nearby</title>
 
-    <!-- Link to the same CSS used for the restaurant details page -->
     <link rel="stylesheet" href="{% static 'restaurantPageList.css' %}">
 </head>
 <body>
     <div class="container">
         <h1>Foodie: Restaurants Nearby</h1>
+
+        <form method="GET" action="" class="search-form">
+            <input type="text" name="q" placeholder="Search for restaurants..." value="{{ query }}" class="search-input">
+            <button type="submit" class="search-button">Search</button>
+        </form>
+
         <ul class="restaurant-list">
             {% for restaurant in restaurants %}
                 <li class="restaurant-item">
@@ -20,6 +25,8 @@
                         {{ restaurant.name }} - {{ restaurant.cuisine }} ({{ restaurant.overall_rating }} {% if restaurant.overall_rating == 1 %}star{% else %}stars{% endif %})
                     </a>
                 </li>
+            {% empty %}
+                <li class="no-restaurants">No restaurants found matching your search criteria.</li>
             {% endfor %}
         </ul>
     </div>

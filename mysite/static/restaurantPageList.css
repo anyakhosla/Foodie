@@ -1,58 +1,102 @@
-/* General page styling */
 body {
-    background-color: #f0f8ff; /* Light blue background */
+    background-color: #f0f8ff;
     font-family: 'Roboto', sans-serif;
     margin: 0;
     padding: 0;
-    color: #424242; /* Dark gray for general text */
+    color: #424242;
 }
 
 h1 {
     font-size: 3em;
-    color: #0d47a1; /* Dark blue for the heading */
+    color: #0d47a1;
     text-align: center;
     margin-top: 20px;
 }
 
 .container {
-    max-width: 1200px;
+    max-width: 800px;
     margin: 0 auto;
     padding: 20px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* Restaurant List Styling */
+.search-form {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.search-input {
+    width: 350px;
+    padding: 12px;
+    border: 2px solid #0d47a1;
+    border-radius: 8px;
+    font-size: 1.1em;
+    background-color: #e3f2fd;
+    color: #0d47a1;
+    outline: none;
+}
+
+.search-input::placeholder {
+    color: #90caf9;
+}
+
+.search-button {
+    padding: 12px 20px;
+    margin-left: 10px;
+    background-color: #0d47a1;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.search-button:hover {
+    background-color: #1565c0;
+}
+
 ul.restaurant-list {
     list-style-type: none;
     padding: 0;
+    margin: 0;
 }
 
 .restaurant-item {
     margin: 10px 0;
     padding: 15px;
-    background-color: #e3f2fd; /* Light blue for the item background */
+    background-color: #e3f2fd;
     border-radius: 8px;
     transition: background-color 0.3s ease;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .restaurant-item:hover {
-    background-color: #bbdefb; /* Darker blue on hover */
+    background-color: #bbdefb;
 }
 
 .restaurant-link {
     font-size: 1.4em;
     text-decoration: none;
-    color: #0d47a1; /* Dark blue for links */
+    color: #0d47a1;
     font-weight: bold;
     display: block;
     transition: color 0.3s ease;
 }
 
 .restaurant-link:hover {
-    color: #1e88e5; /* Lighter blue on hover */
+    color: #1e88e5;
 }
 
-/* Responsiveness */
+.no-restaurants {
+    text-align: center;
+    font-size: 1.2em;
+    color: #e53935;
+}
+
 @media (max-width: 768px) {
     h1 {
         font-size: 2.5em;
@@ -64,5 +108,14 @@ ul.restaurant-list {
 
     .restaurant-item {
         padding: 10px;
+    }
+
+    .search-input {
+        width: 250px;
+    }
+
+    .search-button {
+        padding: 10px 15px;
+        font-size: 1em;
     }
 }
