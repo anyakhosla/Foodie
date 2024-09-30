@@ -93,7 +93,64 @@ def restaurant_data(request):
             'phone_number': restaurant.phone_number,
             'website': restaurant.website
         })
+
     return JsonResponse({'restaurants': restaurant_list})
+
+
+from django.http import JsonResponse
+from .models import Restaurant
+import math
+
+
+def calculate_distance(lat1, lon1, lat2, lon2):
+    R = 3958.8  # Radius of the Earth in miles
+    lat1_rad = math.radians(lat1)
+    lon1_rad = math.radians(lon1)
+    lat2_rad = math.radians(lat2)
+    lon2_rad = math.radians(lon2)
+
+    dlat = lat2_rad - lat1_rad
+    dlon = lon2_rad - lon1_rad
+
+    a = math.sin(dlat / 2) ** 2 + math.cos(lat1_rad) * math.cos(lat2_rad) * math.sin(dlon / 2) ** 2
+    c = 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a))
+
+    distance = R * c  # Distance in miles
+    return distance
+
+
+def filter_restaurants(request):
+    min_rating = float(request.GET.get('min_rating', 1))
+    max_distance = float(request.GET.get('max_distance', 20))
+
+    # Center of Atlanta
+    center_lat = 33.7490
+    center_lon = -84.3880
+
+    restaurants = Restaurant.objects.all()
+    filtered_restaurants = []
+
+    for restaurant in restaurants:
+        distance = calculate_distance(center_lat, center_lon, restaurant.latitude, restaurant.longitude)
+
+        if restaurant.overall_rating >= min_rating and distance <= max_distance:
+            filtered_restaurants.append({
+                'name': restaurant.name,
+                'cuisine': restaurant.cuisine,
+                'address': restaurant.address,
+                'latitude': restaurant.latitude,
+                'longitude': restaurant.longitude,
+                'overall_rating': restaurant.overall_rating,
+                'id': restaurant.id,
+                'phone_number': restaurant.phone_number,
+                'website': restaurant.website,
+                'distance': round(distance, 2)  # Include the distance in the response
+            })
+
+    return JsonResponse({'restaurants': filtered_restaurants})
+
+
+
 
 def restaurant_list(request):
     restaurants = Restaurant.objects.all()  # do not change name of this variable
