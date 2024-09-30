@@ -1,15 +1,16 @@
-/* General page styling */
 body {
-    background-color: #f0f8ff; /* Light blue background */
+    background-color: #f0f8ff;
     font-family: 'Roboto', sans-serif;
     margin: 0;
     padding: 0;
-    color: #424242; /* Dark gray for general text */
+    color: #424242;
+    justify-content: center;
+    align-items: center;
 }
 
 h1 {
     font-size: 3em;
-    color: #0d47a1; /* Dark blue for the restaurant name */
+    color: #0d47a1;
     text-align: center;
     margin-top: 20px;
     margin-bottom: 5px;
@@ -17,12 +18,12 @@ h1 {
 
 h2 {
     font-size: 1.8em;
-    color: #1e88e5; /* Slightly lighter blue for cuisine */
+    color: #1e88e5;
     text-align: center;
 }
 
 .buttonDiv {
-    color: #1e88e5; /* for the button */
+    color: #1e88e5;
     text-align: center;
     text-decoration: underline;
     background-color: transparent;
@@ -60,11 +61,13 @@ textarea {
     box-shadow: 0 6px 6px rgba(0, 0, 0, 0.6);
     align-self: center;
     align-items: center;
+    padding: 15px;
+    font-family: Roboto, sans-serif;
 }
 
 p {
     font-size: 1.2em;
-    color: #616161; /* Gray for the paragraph text */
+    color: #616161;
     line-height: 1.6em;
     margin: 10px auto;
     max-width: 800px;
@@ -72,10 +75,9 @@ p {
 }
 
 strong {
-    color: #0d47a1; /* Dark blue for emphasis */
+    color: #0d47a1;
 }
 
-/* Address, Phone Number, Website Styling */
 p strong {
     font-size: 1.2em;
 }
@@ -89,9 +91,8 @@ a:hover {
     text-decoration: underline;
 }
 
-/* Review Section */
 p strong {
-    color: #0d47a1; /* Dark blue for review stars */
+    color: #0d47a1;
     font-size: 1.1em;
 }
 
@@ -101,11 +102,11 @@ p strong {
     max-width: 800px;
     margin: 5px auto;
     text-align: justify;
-    color: #424242; /* Dark gray for review text */
+    color: #424242;
 }
 
 .review-container {
-    background-color: #e3f2fd; /* Light blue for review background */
+    background-color: #e3f2fd;
     padding: 15px;
     margin: 20px auto;
     border-radius: 8px;
@@ -113,24 +114,30 @@ p strong {
     max-width: 800px;
 }
 
-/* Star Rating Styling */
-.star-rating {
-    font-size: 1.2em;
-    color: #ffb400; /* Gold color for stars */
+.reviews-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+    padding-bottom: 20px;
 }
 
-/* Image Styling for Restaurant List */
+.star-rating {
+    font-size: 1.2em;
+    color: #ffb400;
+}
+
 .restaurant-image {
     width: 100px;
     height: 100px;
-    object-fit: cover; /* Ensures image is properly fitted */
+    object-fit: cover;
     margin-right: 10px;
-    border-radius: 5px; /* Optional rounded corners for images */
-    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.2); /* Light shadow around the image */
+    border-radius: 5px;
+    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.2);
     vertical-align: middle;
 }
 
-/* Mobile responsiveness */
 @media (max-width: 768px) {
     h1 {
         font-size: 2.2em;
@@ -149,38 +156,17 @@ p strong {
     }
 
     .restaurant-image {
-        width: 75px; /* Smaller images on mobile */
+        width: 75px;
         height: 75px;
     }
 }
 
 .image-container {
     display: flex;
-    justify-content: center; /* Center horizontally */
-    align-items: center; /* Center vertically */
-    height: 300px; /* Adjust height as needed */
-    overflow: hidden; /* Hide overflowed parts of the image */
-}
-
-.restaurant-image {
-    height: 100%;
-    object-fit: cover;
-    width: auto;
-}
-
-textarea {
-    padding: 15px;
-    font-size: 16px;
-    font-family: Roboto, sans-serif;
-}
-
-.reviews-section {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
     justify-content: center;
-    align-content: center;
-    padding-bottom: 20px;
+    align-items: center;
+    height: 300px;
+    overflow: hidden;
 }
 
 .form-container {
@@ -199,9 +185,10 @@ form {
     align-content: center;
 }
 
-body {
-    justify-content: center;
-    align-items: center;
+.restaurant-image {
+    height: 100%;
+    object-fit: cover;
+    width: auto;
 }
 
 label {

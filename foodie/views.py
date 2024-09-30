@@ -1,12 +1,10 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
+from django.db.models import Q
 from .models import Restaurant, CustomUser
-
-from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
-from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.http import JsonResponse
 from .forms import CustomUserCreationForm
@@ -47,11 +45,9 @@ def register(request):
             return redirect('foodie:mapView')
         else:
             print(form.errors)
-
     else:
         form = CustomUserCreationForm()
     return render(request, 'register.html', {'form': form})
-
 
 def login_view(request):
     if request.method == 'POST':
@@ -63,7 +59,6 @@ def login_view(request):
             if user is not None:
                 login(request, user)
                 messages.success(request, f'Welcome, {username}!')
-                # go to settings.py to change redirect behavior after login
             else:
                 messages.error(request, 'Invalid username or password.')
         else:
@@ -76,7 +71,6 @@ def logout_view(request):
     logout(request)
     messages.info(request, "You have successfully logged out.")
     return redirect('foodie:login')
-
 
 def restaurant_data(request):
     restaurants = Restaurant.objects.all()
@@ -153,21 +147,21 @@ def filter_restaurants(request):
 
 
 def restaurant_list(request):
-    restaurants = Restaurant.objects.all()  # do not change name of this variable
+    query = request.GET.get('q', '')
+    if query:
+        restaurants = Restaurant.objects.filter(Q(name__icontains=query) | Q(cuisine__icontains=query))
+    else:
+        restaurants = Restaurant.objects.all()
 
-    context = {}
-    context['restaurants'] = restaurants
-
+    context = {
+        'restaurants': restaurants,
+        'query': query,
+    }
     return render(request, 'foodie/restaurant_list.html', context)
 
-
 def restaurant_detail(request, restaurant_id):
-    # Fetch the restaurant by ID
     restaurant = get_object_or_404(Restaurant, pk=restaurant_id)
-
-    # Fetching the reviews from the JSONField (assuming the reviews are stored in a list)
     reviews = restaurant.reviews if restaurant.reviews else []
-
     context = {
         'restaurant': restaurant,
         'reviews': reviews,
