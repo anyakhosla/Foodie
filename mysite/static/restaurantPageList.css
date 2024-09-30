@@ -1,14 +1,14 @@
 body {
-    background-color: #f0f8ff; /* Light blue background */
+    background-color: #f0f8ff;
     font-family: 'Roboto', sans-serif;
     margin: 0;
     padding: 0;
-    color: #424242; /* Dark gray for general text */
+    color: #424242;
 }
 
 h1 {
     font-size: 3em;
-    color: #0d47a1; /* Dark blue for the heading */
+    color: #0d47a1;
     text-align: center;
     margin-top: 20px;
 }
@@ -22,7 +22,6 @@ h1 {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* Search Form Styling */
 .search-form {
     display: flex;
     justify-content: center;
@@ -32,23 +31,23 @@ h1 {
 .search-input {
     width: 350px;
     padding: 12px;
-    border: 2px solid #0d47a1; /* Dark blue border */
+    border: 2px solid #0d47a1;
     border-radius: 8px;
     font-size: 1.1em;
-    background-color: #e3f2fd; /* Light blue background */
+    background-color: #e3f2fd;
     color: #0d47a1;
     outline: none;
 }
 
 .search-input::placeholder {
-    color: #90caf9; /* Lighter blue placeholder */
+    color: #90caf9;
 }
 
 .search-button {
     padding: 12px 20px;
     margin-left: 10px;
-    background-color: #0d47a1; /* Dark blue background */
-    color: white; /* White text */
+    background-color: #0d47a1;
+    color: white;
     border: none;
     border-radius: 8px;
     font-size: 1.1em;
@@ -57,10 +56,9 @@ h1 {
 }
 
 .search-button:hover {
-    background-color: #1565c0; /* Lighter blue on hover */
+    background-color: #1565c0;
 }
 
-/* Restaurant List Styling */
 ul.restaurant-list {
     list-style-type: none;
     padding: 0;
@@ -70,37 +68,35 @@ ul.restaurant-list {
 .restaurant-item {
     margin: 10px 0;
     padding: 15px;
-    background-color: #e3f2fd; /* Light blue background */
+    background-color: #e3f2fd;
     border-radius: 8px;
     transition: background-color 0.3s ease;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .restaurant-item:hover {
-    background-color: #bbdefb; /* Slightly darker blue on hover */
+    background-color: #bbdefb;
 }
 
 .restaurant-link {
     font-size: 1.4em;
     text-decoration: none;
-    color: #0d47a1; /* Dark blue for links */
+    color: #0d47a1;
     font-weight: bold;
     display: block;
     transition: color 0.3s ease;
 }
 
 .restaurant-link:hover {
-    color: #1e88e5; /* Lighter blue on hover */
+    color: #1e88e5;
 }
 
-/* No Results Message */
 .no-restaurants {
     text-align: center;
     font-size: 1.2em;
-    color: #e53935; /* Red color to emphasize no results */
+    color: #e53935;
 }
 
-/* Responsive Design */
 @media (max-width: 768px) {
     h1 {
         font-size: 2.5em;
