@@ -149,6 +149,7 @@ p strong {
 
     p {
         font-size: 1em;
+        padding: 10px;
     }
 
     .review-container {
@@ -211,3 +212,9 @@ label {
     background-color: #ddd;
     color: black;
 } */
+
+#restaurantLink {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
