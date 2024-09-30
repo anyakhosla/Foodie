@@ -4,6 +4,8 @@ body {
     margin: 0;
     padding: 0;
     color: #424242;
+    justify-content: center;
+    align-items: center;
 }
 
 h1 {
@@ -41,6 +43,26 @@ button {
     a:hover {
         text-decoration: none;
     }
+}
+
+input {
+    font-size: 1.2em;
+    background-color: transparent;
+    border: 1px solid #3498db;
+    box-shadow: 0 6px 6px rgba(0, 0, 0, 0.6);
+    align-self: center;
+    align-items: center;
+}
+
+textarea {
+    font-size: 1.2em;
+    background-color: transparent;
+    border: 1px solid #3498db;
+    box-shadow: 0 6px 6px rgba(0, 0, 0, 0.6);
+    align-self: center;
+    align-items: center;
+    padding: 15px;
+    font-family: Roboto, sans-serif;
 }
 
 p {
@@ -92,6 +114,15 @@ p strong {
     max-width: 800px;
 }
 
+.reviews-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+    padding-bottom: 20px;
+}
+
 .star-rating {
     font-size: 1.2em;
     color: #ffb400;
@@ -138,8 +169,28 @@ p strong {
     overflow: hidden;
 }
 
+.form-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+}
+
 .restaurant-image {
     height: 100%;
     object-fit: cover;
     width: auto;
+}
+
+label {
+    font-family: Roboto, sans-serif;
 }

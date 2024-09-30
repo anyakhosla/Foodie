@@ -139,6 +139,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_REDIRECT_URL = 'foodie:mapView'
 LOGOUT_REDIRECT_URL = 'foodie:login'
+LOGIN_URL = '/foodie/login/'
 
 # MEDIA settings
 MEDIA_URL = '/media/'

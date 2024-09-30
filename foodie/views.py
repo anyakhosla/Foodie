@@ -9,6 +9,7 @@ from django.contrib import messages
 from django.http import JsonResponse
 from .forms import CustomUserCreationForm
 from django.contrib.auth.views import LoginView
+from .forms import AddReviewForm
 
 class CustomLoginView(LoginView):
     template_name = 'login.html'
@@ -167,6 +168,36 @@ def restaurant_detail(request, restaurant_id):
     }
     return render(request, 'foodie/restaurant_detail.html', context)
 
+@login_required
+def add_review(request, restaurant_id):
+    restaurant = get_object_or_404(Restaurant, pk=restaurant_id)
+
+    if request.method == 'POST':
+        form = AddReviewForm(request.POST)
+        if form.is_valid():
+            review = form.cleaned_data['review']
+            rating = form.cleaned_data['rating']
+
+            restaurant.reviews.append({
+                'author_name': request.user.username,
+                'text': review,
+                'rating': rating
+            })
+
+            restaurant.save()
+            messages.success(request, "Review added successfully!")
+            return redirect('foodie:restaurant_detail', restaurant_id=restaurant.id)
+        else:
+            messages.error(request, 'There is an error in your review.')
+
+
+    reviews = restaurant.reviews
+    context = {
+        'restaurant': restaurant,
+        'reviews': reviews,
+    }
+    return render(request, 'foodie/restaurant_detail.html', context)
+
 def user_profile_page(request): # add user id parameter
     # add logic to check if user is signed in
     if request.user.is_authenticated:
@@ -177,3 +208,4 @@ def user_profile_page(request): # add user id parameter
         return render(request, "foodie/userPage.html", context) # return render(request, "foodie/userPage.html", {'user_id' : user_id})
     else:
         return redirect('foodie:login')
+
