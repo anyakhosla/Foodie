@@ -3,7 +3,7 @@
 <html>
 <head>
     <title>Atlanta Restaurant Finder</title>
-    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <link rel="stylesheet" href="{% static 'restaurantPageList.css' %}">
     <script src="https://maps.googleapis.com/maps/api/js?key={{ GOOGLE_MAPS_API_KEY }}&callback=initMap" async defer></script>
     <script>
         var map;
@@ -19,22 +19,12 @@
 
             currentInfoWindow = null;
 
-            // Add a marker for the center of Atlanta
-            new google.maps.Marker({
-                position: atlantaCenter,
-                map: map,
-                title: "Center of Atlanta",
-                icon: {
-                    url: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png"
-                }
-            });
-
             // Call fetchRestaurants with default values on initial load
             fetchRestaurants();
         }
 
-        function fetchRestaurants(minRating = 1, maxDistance = 20) {
-            const url = `/foodie/filter_restaurants/?min_rating=${minRating}&max_distance=${maxDistance}`;
+        function fetchRestaurants(minRating = 1, maxDistance = 20, query = '') {
+            const url = `/foodie/filter_restaurants/?min_rating=${minRating}&max_distance=${maxDistance}&q=${query}`;
             fetch(url)
                 .then(response => response.json())
                 .then(data => {
@@ -101,27 +91,28 @@
         function applyFilters() {
             const minRating = document.getElementById('min-rating').value;
             const maxDistance = document.getElementById('max-distance').value;
-            fetchRestaurants(minRating, maxDistance);
+            const query = document.querySelector('.search-input').value; // Get the search query
+            fetchRestaurants(minRating, maxDistance, query); // Pass query to fetchRestaurants
         }
     </script>
     <style>
         #map {
             position: absolute;
-            top: 60px; /* Below header */
-            left: 220px; /* Next to sidebar */
+            top: 140px; /* Adjust top to account for search bar */
+            left: 220px;
             right: 0;
             bottom: 0;
         }
         .sidebar {
             position: fixed;
             left: 0;
-            top: 60px; /* Below header */
-            width: 200px; /* Width of the sidebar */
-            height: calc(100% - 60px); /* Full height minus header */
-            background-color: white; /* Background for sidebar */
-            padding: 10px; /* Padding for sidebar */
-            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2); /* Sidebar shadow */
-            z-index: 1; /* Ensure the sidebar is above the map */
+            top: 140px; /* Adjust top to account for search bar */
+            width: 200px;
+            height: calc(100% - 140px);
+            background-color: white;
+            padding: 10px;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+            z-index: 1;
         }
         html, body {
             height: 100%;
@@ -136,14 +127,33 @@
             height: 60px;
             margin: 0;
             padding: 10px;
-            background-color: #007bff; /* Blue color for header */
+            background-color: #007bff;
             color: white;
             z-index: 2;
+        }
+        .search-bar-container {
+            position: fixed;
+            top: 60px; /* Below the title */
+            left: 0;
+            right: 0;
+            padding: 10px;
+            background-color: #f0f8ff;
+            z-index: 2;
+            text-align: center;
         }
     </style>
 </head>
 <body>
     <h1>Atlanta Restaurant Finder</h1>
+    
+    <!-- Insert search bar below title -->
+    <div class="search-bar-container">
+        <form method="GET" action="javascript:void(0);" class="search-form">
+            <input type="text" name="q" placeholder="Search for restaurants..." class="search-input">
+            <button type="submit" class="search-button" onclick="applyFilters()">Search</button>
+        </form>
+    </div>
+
     <div class="sidebar">
         <h2>Filter Restaurants</h2>
         <label for="min-rating">Min Rating:</label>
@@ -154,6 +164,7 @@
         <br><br>
         <button onclick="applyFilters()">Apply Filters</button>
     </div>
+
     <div id="map"></div>
 </body>
 </html>
