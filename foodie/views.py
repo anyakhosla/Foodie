@@ -35,12 +35,8 @@ def mapView(request):
 
 # myapp/views.py
 
-<<<<<<< HEAD
-=======
 # class CustomLoginView(LoginView):
 #     template_name = 'login.html'
-
->>>>>>> 33da277e6f7eb0b8ff8665b17d185b909eeb016a
 
 def register(request):
     if request.method == 'POST':
