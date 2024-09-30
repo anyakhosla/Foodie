@@ -145,8 +145,39 @@ p strong {
 }
 
 .restaurant-image {
-    height: 100%; /* Adjust to fill the container height */
-    object-fit: cover; /* Ensures the image covers the container without distortion */
-    width: auto; /* Maintain aspect ratio */
+    height: 100%;
+    object-fit: cover;
+    width: auto;
 }
 
+textarea {
+    padding: 15px;
+    font-size: 16px;
+    font-family: Roboto, sans-serif;
+}
+
+.reviews-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+    padding-bottom: 20px;
+}
+
+.form-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+}
+
+body {
+    justify-content: center;
+    align-items: center;
+}
+
+label {
+    font-family: Roboto, sans-serif;
+}
