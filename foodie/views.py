@@ -191,6 +191,7 @@ def add_review(request, restaurant_id):
             })
 
             restaurant.save()
+            messages.success(request, "Review added successfully!")
             return redirect('foodie:restaurant_detail', restaurant_id=restaurant.id)
         else:
             messages.error(request, 'There is an error in your review.')

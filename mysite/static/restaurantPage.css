@@ -44,6 +44,24 @@ button {
     }
 }
 
+input {
+    font-size: 1.2em;
+    background-color: transparent;
+    border: 1px solid #3498db;
+    box-shadow: 0 6px 6px rgba(0, 0, 0, 0.6);
+    align-self: center;
+    align-items: center;
+}
+
+textarea {
+    font-size: 1.2em;
+    background-color: transparent;
+    border: 1px solid #3498db;
+    box-shadow: 0 6px 6px rgba(0, 0, 0, 0.6);
+    align-self: center;
+    align-items: center;
+}
+
 p {
     font-size: 1.2em;
     color: #616161; /* Gray for the paragraph text */
@@ -166,6 +184,14 @@ textarea {
 }
 
 .form-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+}
+
+form {
     display: flex;
     flex-direction: column;
     align-items: center;

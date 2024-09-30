@@ -29,11 +29,19 @@
     <script>
         function showReviewForm() {
             let form = document.getElementById("add_review_form");
+            let bottomOfPage = document.getElementById("scroll-to");
+            let addReviewButton = document.getElementById("addReviewButton");
             if (form.style.display === "none") {
                 form.style.display = "block";
-                form.scrollIntoView({ behavior: "smooth", block: "end" });
+                bottomOfPage.scrollIntoView({ behavior: "smooth", block: "end" });
             } else {
                 form.style.display = "none";
+            }
+
+            if (addReviewButton.textContent == "Close Review Box") {
+                addReviewButton.textContent = "Add Review"
+            } else {
+                addReviewButton.textContent = "Close Review Box"
             }
         }
     </script>
@@ -45,6 +53,12 @@
             <a href="{% url 'foodie:mapView' %}">Back to Map</a>
         </div>
     </div>
+
+    {% if messages %}
+        {% for message in messages %}
+            <p>{{ message }}</p>
+        {% endfor %}
+    {% endif %}
 
     {% if restaurant.image %}
         <div class="image-container">
@@ -70,11 +84,7 @@
     {% endfor %}
 
     <div class="reviews-section">
-        {% if messages %}
-            <p>{{ messages|last }}</p>
-        {% endif %}
-
-        <button onclick="showReviewForm()">Add a Review</button>
+        <button onclick="showReviewForm()" id="addReviewButton">Add a Review</button>
 
         <form action="{% url 'foodie:add_review' restaurant.id %}" method="post">
             {% csrf_token %}
@@ -92,10 +102,12 @@
 
                 <br><br>
 
-                <input type="submit" value="Submit Review">
+                <input type="submit" value="Submit Review" class="button">
             </div>
         </form>
     </div>
+
+    <div id="scroll-to"></div>
 
 </body>
 </html>
