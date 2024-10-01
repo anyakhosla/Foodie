@@ -164,13 +164,17 @@ def restaurant_detail(request, restaurant_id):
     reviews = restaurant.reviews if restaurant.reviews else []
 
     loggedIn = False
+    isFavorite = False
     if request.user.is_authenticated:
         loggedIn = True
+        if request.user.favorite_restaurants.filter(pk=restaurant_id).exists():
+            isFavorite = True
 
     context = {
         'restaurant': restaurant,
         'reviews': reviews,
-        'loggedIn': loggedIn
+        'loggedIn': loggedIn,
+        'isFavorite': isFavorite
     }
     return render(request, 'foodie/restaurant_detail.html', context)
 
@@ -219,7 +223,17 @@ def add_restaurant_favorite(request, restaurant_id):
     if request.method == 'POST' and request.user.is_authenticated:
         restaurant = get_object_or_404(Restaurant, pk=restaurant_id)
         request.user.favorite_restaurants.add(restaurant)
-        return redirect('foodie:user_profile_page')
+        messages.success(request, "Favorite added successfully!")
+        return redirect('foodie:restaurant_detail', restaurant_id=restaurant.id)
+    else:
+        return redirect('foodie:login')
+
+def remove_restaurant_favorite(request, restaurant_id):
+    if request.method == 'POST' and request.user.is_authenticated:
+        restaurant = get_object_or_404(Restaurant, pk=restaurant_id)
+        request.user.favorite_restaurants.remove(restaurant)
+        messages.success(request, "Favorite removed successfully!")
+        return redirect('foodie:restaurant_detail', restaurant_id=restaurant.id)
     else:
         return redirect('foodie:login')
 
