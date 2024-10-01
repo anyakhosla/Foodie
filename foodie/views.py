@@ -45,7 +45,7 @@ def register(request):
         if form.is_valid():
             user = form.save()
             login(request, user)
-            return redirect('foodie:mapView')
+            return redirect('foodie:user_profile_page')
         else:
             print(form.errors)
     else:
