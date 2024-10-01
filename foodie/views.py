@@ -63,6 +63,7 @@ def login_view(request):
             user = authenticate(username=username, password=password)
             if user is not None:
                 login(request, user)
+                messages.success(request, "Successfully logged in")
                 return redirect('foodie:user_profile_page') # readd success message when we add messages to user profile page
             else:
                 messages.error(request, 'Invalid username or password.')
@@ -141,8 +142,6 @@ def filter_restaurants(request):
             })
 
     return JsonResponse({'restaurants': filtered_restaurants})
-
-
 
 
 def restaurant_list(request):
@@ -232,12 +231,15 @@ def add_restaurant_favorite(request, restaurant_id):
     else:
         return redirect('foodie:login')
 
-def remove_restaurant_favorite(request, restaurant_id):
+def remove_restaurant_favorite(request, restaurant_id, destination):
     if request.method == 'POST' and request.user.is_authenticated:
         restaurant = get_object_or_404(Restaurant, pk=restaurant_id)
         request.user.favorite_restaurants.remove(restaurant)
         messages.success(request, "Favorite removed successfully!")
-        return redirect('foodie:restaurant_detail', restaurant_id=restaurant.id)
+        if destination != 'user_profile_page':
+            return redirect('foodie:restaurant_detail', restaurant_id=restaurant.id)
+        else:
+            return redirect('foodie:user_profile_page')
     else:
         return redirect('foodie:login')
 

@@ -22,7 +22,7 @@ urlpatterns = [
     path('filter_restaurants/', views.filter_restaurants, name='filter_restaurants'),
     path('user/', views.user_profile_page, name='user_profile_page'),
     path('restaurant/<int:restaurant_id>/add_favorite/', views.add_restaurant_favorite, name='add_restaurant_favorite'),
-    path('restaurant/<int:restaurant_id>/remove_favorite/', views.remove_restaurant_favorite, name='remove_restaurant_favorite')
+    path('restaurant/<int:restaurant_id>/<str:destination>/remove_favorite/', views.remove_restaurant_favorite, name='remove_restaurant_favorite')
 ]
 
 
