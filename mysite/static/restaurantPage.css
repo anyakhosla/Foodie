@@ -30,6 +30,15 @@ h2 {
     display: inline-block;
 }
 
+.d-grid {
+    color: #1e88e5;
+    text-align: center;
+    text-decoration: underline;
+    background-color: transparent;
+    display: inline-block;
+    margin-top: 20px;
+}
+
 .buttonsContainer {
     text-align: center;
     padding: 20px;
