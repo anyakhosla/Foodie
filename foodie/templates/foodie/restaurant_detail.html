@@ -48,12 +48,14 @@
         </div>
     {% endif %}
 
-    <form method="POST" action="{% url 'foodie:add_restaurant_favorite' restaurant.id %}">
-        {% csrf_token %}
-        <div class="d-grid">
-            <button type="submit" class="btn btn-primary">Add Favorite</button>
-        </div>
-    </form>
+    {% if loggedIn %}
+        <form method="POST" action="{% url 'foodie:add_restaurant_favorite' restaurant.id %}">
+            {% csrf_token %}
+            <div class="d-grid">
+                <button type="submit" class="btn btn-primary">Add Favorite</button>
+            </div>
+        </form>
+    {% endif %}
 
     <h1>{{ restaurant.name }}</h1>
     <h2>Cuisine: {{ restaurant.cuisine }}</h2>
