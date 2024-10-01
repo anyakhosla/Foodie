@@ -38,6 +38,8 @@ def mapView(request):
 #     template_name = 'login.html'
 
 def register(request):
+    if request.user.is_authenticated:
+        return redirect('foodie:user_profile_page')
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
