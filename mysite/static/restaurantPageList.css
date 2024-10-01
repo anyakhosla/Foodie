@@ -119,3 +119,27 @@ ul.restaurant-list {
         font-size: 1em;
     }
 }
+
+.restaurant-filter {
+    padding: 20px;
+    text-align: center;
+}
+  
+.filter-fields {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+}
+  
+.filter-fields label,
+.filter-fields input {
+    flex: 1 1 auto;
+}
+  
+@media (max-width: 600px) {
+    .filter-fields {
+        flex-direction: column;
+    }
+}
+  
