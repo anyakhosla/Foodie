@@ -23,6 +23,26 @@ body {
     text-align: center;
     margin: 10px 0;
 }
+.info h3 {
+    text-align: center;
+    margin-top: 10px;
+}
+
+hr {
+    margin-top:10px;
+}
+
+ul {
+    list-style-position: inside;
+    li {
+        margin: 5px 0;
+        a {
+            text-decoration: underline;
+        }
+        
+    }
+}
+
 .profile-container p {
     text-align: center;
     color: #666;

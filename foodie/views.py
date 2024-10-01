@@ -10,6 +10,7 @@ from django.http import JsonResponse
 from .forms import CustomUserCreationForm
 from django.contrib.auth.views import LoginView
 from .forms import AddReviewForm
+import math
 
 class CustomLoginView(LoginView):
     template_name = 'login.html'
@@ -90,12 +91,6 @@ def restaurant_data(request):
 
     return JsonResponse({'restaurants': restaurant_list})
 
-
-from django.http import JsonResponse
-from .models import Restaurant
-import math
-
-
 def calculate_distance(lat1, lon1, lat2, lon2):
     R = 3958.8  # Radius of the Earth in miles
     lat1_rad = math.radians(lat1)
@@ -162,9 +157,15 @@ def restaurant_list(request):
 def restaurant_detail(request, restaurant_id):
     restaurant = get_object_or_404(Restaurant, pk=restaurant_id)
     reviews = restaurant.reviews if restaurant.reviews else []
+
+    loggedIn = False
+    if request.user.is_authenticated:
+        loggedIn = True
+
     context = {
         'restaurant': restaurant,
         'reviews': reviews,
+        'loggedIn': loggedIn
     }
     return render(request, 'foodie/restaurant_detail.html', context)
 
@@ -205,7 +206,15 @@ def user_profile_page(request): # add user id parameter
         context = {
             'user': user,
         }
-        return render(request, "foodie/userPage.html", context) # return render(request, "foodie/userPage.html", {'user_id' : user_id})
+        return render(request, "foodie/userPage.html", context)
+    else:
+        return redirect('foodie:login')
+
+def add_restaurant_favorite(request, restaurant_id):
+    if request.method == 'POST' and request.user.is_authenticated:
+        restaurant = get_object_or_404(Restaurant, pk=restaurant_id)
+        request.user.favorite_restaurants.add(restaurant)
+        return redirect('foodie:user_profile_page')
     else:
         return redirect('foodie:login')
 

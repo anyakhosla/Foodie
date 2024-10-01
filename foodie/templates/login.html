@@ -12,12 +12,20 @@
     <div class="col-md-6">
         <h2 class="text-center mb-4">Login</h2>
 
-        <!-- Display form errors -->
-        {% if form.errors %}
+        <!-- Display form errors/messages -->
+        {% if form.errors%}
             <div class="alert alert-danger mt-3">
                 <ul>
                     {% for field, errors in form.errors.items %}
                         <li>{{ field }}: {{ errors|striptags }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% elif messages %} <!-- Intentionally not showing messages if there are errors to avoid screen clutter -->
+            <div class="alert alert-success mt-3"> <!-- If we want info messages, we should use alert-info -->
+                <ul>
+                    {% for message in messages %}
+                        <li>{{ message }}</li>
                     {% endfor %}
                 </ul>
             </div>
