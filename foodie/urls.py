@@ -20,7 +20,8 @@ urlpatterns = [
     path('map/restaurant-data/', views.restaurant_data, name='restaurant_data'),
     path('restaurant/<int:restaurant_id>/add_review/', views.add_review, name='add_review'),
     path('filter_restaurants/', views.filter_restaurants, name='filter_restaurants'),
-    path('user/', views.user_profile_page, name='user_profile_page')
+    path('user/', views.user_profile_page, name='user_profile_page'),
+    path('restaurant/<int:restaurant_id>/add_favorite/', views.add_restaurant_favorite, name='add_restaurant_favorite')
 ]
 
 

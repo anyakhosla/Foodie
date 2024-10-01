@@ -205,7 +205,15 @@ def user_profile_page(request): # add user id parameter
         context = {
             'user': user,
         }
-        return render(request, "foodie/userPage.html", context) # return render(request, "foodie/userPage.html", {'user_id' : user_id})
+        return render(request, "foodie/userPage.html", context)
+    else:
+        return redirect('foodie:login')
+
+def add_restaurant_favorite(request, restaurant_id):
+    if request.method == 'POST' and request.user.is_authenticated:
+        restaurant = get_object_or_404(Restaurant, pk=restaurant_id)
+        request.user.favorite_restaurants.add(restaurant)
+        return redirect('foodie:user_profile_page')
     else:
         return redirect('foodie:login')
 

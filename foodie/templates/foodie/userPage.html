@@ -17,6 +17,15 @@
             <p><strong>Email:</strong> {{ user.email }}</p>
             <p><strong>City:</strong> {{ user.city }}</p>
             <p><strong>Address:</strong> {{ user.address }} </p>
+            {% if user.favorite_restaurants.all %}
+                <hr>
+                <h3>Favorite Restaurants</h3>
+                <ul>
+                    {% for restaurant in user.favorite_restaurants.all %}
+                        <li><a href = "{% url 'foodie:restaurant_detail' restaurant.id %}">{{ restaurant.name }}</a></li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
         </div>
     </div>
 </body>
