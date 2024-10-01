@@ -53,6 +53,8 @@ def register(request):
     return render(request, 'register.html', {'form': form})
 
 def login_view(request):
+    if request.user.is_authenticated:
+        return redirect('foodie:user_profile_page')
     if request.method == 'POST':
         form = AuthenticationForm(request, data=request.POST)
         if form.is_valid():
@@ -62,6 +64,7 @@ def login_view(request):
             if user is not None:
                 login(request, user)
                 messages.success(request, f'Welcome, {username}!')
+                return redirect('foodie:user_profile_page')
             else:
                 messages.error(request, 'Invalid username or password.')
         else:
