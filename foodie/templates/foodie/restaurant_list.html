@@ -1,34 +1,114 @@
 {% load static %}
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Foodie: Restaurants Nearby</title>
-
     <link rel="stylesheet" href="{% static 'restaurantPageList.css' %}">
+    <style>
+        .container {
+            display: flex;
+            flex-direction: row;
+        }
+        .sidebar {
+            width: 250px;
+            padding: 20px;
+            background-color: #f0f0f0;
+            border-right: 1px solid #ddd;
+        }
+        .main-content {
+            flex-grow: 1;
+            padding: 20px;
+        }
+        .filter-form label {
+            display: block;
+            margin-top: 10px;
+        }
+        .filter-form input {
+            width: 100%;
+            padding: 5px;
+            margin-top: 5px;
+        }
+        .filter-form button {
+            margin-top: 10px;
+            padding: 5px 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        .filter-form button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+    <script>
+        function applyFilters() {
+            const minRating = document.getElementById('min-rating').value;
+            const maxDistance = document.getElementById('max-distance').value;
+            const url = `/foodie/filter_restaurants/?min_rating=${minRating}&max_distance=${maxDistance}`;
+
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    updateRestaurantList(data.restaurants);
+                })
+                .catch(error => console.error('Error fetching restaurant data:', error));
+        }
+
+        function updateRestaurantList(restaurants) {
+            const restaurantList = document.querySelector('.restaurant-list');
+            restaurantList.innerHTML = ''; // Clear existing list
+            if (restaurants.length === 0) {
+                restaurantList.innerHTML = '<li class="no-restaurants">No restaurants found matching your search criteria.</li>';
+                return;
+            }
+            restaurants.forEach(restaurant => {
+                const listItem = document.createElement('li');
+                listItem.className = 'restaurant-item';
+                listItem.innerHTML = `
+                    <a href="/foodie/${restaurant.id}/" class="restaurant-link">
+                        ${restaurant.name} - ${restaurant.cuisine} (${restaurant.overall_rating} stars)
+                    </a>
+                `;
+                restaurantList.appendChild(listItem);
+            });
+        }
+    </script>
 </head>
 <body>
     <div class="container">
-        <h1>Foodie: Restaurants Nearby</h1>
+        <div class="sidebar">
+            <h2>Filter Restaurants</h2>
+            <label for="min-rating">Min Rating:</label>
+            <input type="number" id="min-rating" name="min_rating" value="1" min="1" max="5" step="0.1">
+            
+            <label for="max-distance" style="margin-top: 20px;">Max Distance (miles):</label> <!-- Added margin for separation -->
+            <input type="number" id="max-distance" name="max_distance" value="20" min="1" max="100">
+            
+            <button onclick="applyFilters()">Apply Filters</button>
+        </div>
+        
+        <div class="main-content">
+            <h1>Foodie: Restaurants Nearby</h1>
 
-        <form method="GET" action="" class="search-form">
-            <input type="text" name="q" placeholder="Search for restaurants..." value="{{ query }}" class="search-input">
-            <button type="submit" class="search-button">Search</button>
-        </form>
+            <form method="GET" action="" class="search-form">
+                <input type="text" name="q" placeholder="Search for restaurants..." value="{{ query }}" class="search-input">
+                <button type="submit" class="search-button">Search</button>
+            </form>
 
-        <ul class="restaurant-list">
-            {% for restaurant in restaurants %}
-                <li class="restaurant-item">
-                    <a href="/foodie/{{ restaurant.pk }}/" class="restaurant-link">
-                        {{ restaurant.name }} - {{ restaurant.cuisine }} ({{ restaurant.overall_rating }} {% if restaurant.overall_rating == 1 %}star{% else %}stars{% endif %}) {% if restaurant in favoriteRestaurants %}⭐{% endif %}
-                    </a>
-                </li>
-            {% empty %}
-                <li class="no-restaurants">No restaurants found matching your search criteria.</li>
-            {% endfor %}
-        </ul>
+            <ul class="restaurant-list">
+                {% for restaurant in restaurants %}
+                    <li class="restaurant-item">
+                        <a href="/foodie/{{ restaurant.pk }}/" class="restaurant-link">
+                            {{ restaurant.name }} - {{ restaurant.cuisine }} ({{ restaurant.overall_rating }} {% if restaurant.overall_rating == 1 %}star{% else %}stars{% endif %}) {% if restaurant in favoriteRestaurants %}⭐{% endif %}
+                        </a>
+                    </li>
+                {% empty %}
+                    <li class="no-restaurants">No restaurants found matching your search criteria.</li>
+                {% endfor %}
+            </ul>
+        </div>
     </div>
 </body>
 </html>
