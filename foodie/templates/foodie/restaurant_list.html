@@ -22,7 +22,7 @@
             {% for restaurant in restaurants %}
                 <li class="restaurant-item">
                     <a href="/foodie/{{ restaurant.pk }}/" class="restaurant-link">
-                        {{ restaurant.name }} - {{ restaurant.cuisine }} ({{ restaurant.overall_rating }} {% if restaurant.overall_rating == 1 %}star{% else %}stars{% endif %})
+                        {{ restaurant.name }} - {{ restaurant.cuisine }} ({{ restaurant.overall_rating }} {% if restaurant.overall_rating == 1 %}star{% else %}stars{% endif %}) {% if restaurant in favoriteRestaurants %}⭐{% endif %}
                     </a>
                 </li>
             {% empty %}

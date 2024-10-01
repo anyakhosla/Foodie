@@ -147,10 +147,15 @@ def restaurant_list(request):
         restaurants = Restaurant.objects.filter(Q(name__icontains=query) | Q(cuisine__icontains=query))
     else:
         restaurants = Restaurant.objects.all()
+    
+    favoriteRestaurants = []
+    if request.user.is_authenticated:
+        favoriteRestaurants = request.user.favorite_restaurants.all
 
     context = {
         'restaurants': restaurants,
         'query': query,
+        'favoriteRestaurants': favoriteRestaurants
     }
     return render(request, 'foodie/restaurant_list.html', context)
 
