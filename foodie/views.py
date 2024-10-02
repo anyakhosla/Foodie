@@ -99,12 +99,18 @@ def calculate_distance(lat1, lon1, lat2, lon2):
 def filter_restaurants(request):
     min_rating = float(request.GET.get('min_rating', 1))
     max_distance = float(request.GET.get('max_distance', 20))
+    query = request.GET.get('q', '').strip()
 
     # Center of Atlanta
     center_lat = 33.7490
     center_lon = -84.3880
 
     restaurants = Restaurant.objects.all()
+
+    # Apply search query filter
+    if query:
+        restaurants = restaurants.filter(Q(name__icontains=query) | Q(cuisine__icontains=query))
+
     filtered_restaurants = []
 
     for restaurant in restaurants:
