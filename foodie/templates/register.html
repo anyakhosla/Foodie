@@ -10,7 +10,7 @@
             <div class="alert alert-danger mt-3">
                 <ul>
                     {% for field, errors in form.errors.items %}
-                        <li>{{ field }}: {{ errors|striptags }}</li>
+                        <li>{{ errors|striptags }}</li>
                     {% endfor %}
                 </ul>
             </div>
@@ -55,7 +55,7 @@
                 {{ form.phone_number }}
             </div>
             <div class="d-grid">
-                <button type="submit" class="btn btn-primary">Register</button> <!--TECH DEBT: put css for line below in a css file eventually -->
+                <button type="submit" class="btn btn-primary">Register</button>
                 <a style="margin-top:5px; text-align: center" href={% url 'foodie:login' %}>Already have an account? Login</a>
             </div>
         </form>

@@ -1,4 +1,6 @@
+{% extends 'base.html' %}
 {% load static %}
+{% block content %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,8 +10,21 @@
     <link rel="stylesheet" href="{% static 'userPage.css' %}">
 </head>
 <body>
+    {% if messages %} <!-- Intentionally not showing messages if there are errors to avoid screen clutter -->
+        <div class="row justify-content-center mt-5">
+            <div class="col-md-6">
+                <div class="alert alert-success mt-3"> <!-- If we want info messages, we should use alert-info -->
+                    <ul>
+                        {% for message in messages %}
+                            <li>{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    {% endif %}
     <div class="profile-container">
-	<h1> User Profile </h1>
+        <h1> User Profile </h1>
         <!-- <img src="profile-picture.jpg" alt="User Profile Picture"> -->
         <h2>{{ user.name }}</h2>
         <div class="info">
@@ -17,7 +32,23 @@
             <p><strong>Email:</strong> {{ user.email }}</p>
             <p><strong>City:</strong> {{ user.city }}</p>
             <p><strong>Address:</strong> {{ user.address }} </p>
+            {% if user.favorite_restaurants.all %}
+                <hr>
+                <h3>Favorite Restaurants</h3>
+                <ul>
+                    {% for restaurant in user.favorite_restaurants.all %}
+                        <li>
+                            <a href="{% url 'foodie:restaurant_detail' restaurant.id %}">{{ restaurant.name }}</a>
+                            <form method="post" action="{% url 'foodie:remove_restaurant_favorite' restaurant.id 'user_profile_page' %}" style="display:inline;">
+                                {% csrf_token %}
+                                <button type="submit" style="background:none; border:none; color:red; cursor:pointer;">❌</button>
+                            </form>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
         </div>
     </div>
 </body>
 </html>
+{% endblock %}

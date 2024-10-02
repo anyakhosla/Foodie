@@ -9,6 +9,8 @@ from django.contrib import messages
 from django.http import JsonResponse
 from .forms import CustomUserCreationForm
 from django.contrib.auth.views import LoginView
+from .forms import AddReviewForm
+import math
 
 class CustomLoginView(LoginView):
     template_name = 'login.html'
@@ -36,12 +38,14 @@ def mapView(request):
 #     template_name = 'login.html'
 
 def register(request):
+    if request.user.is_authenticated:
+        return redirect('foodie:user_profile_page')
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
             user = form.save()
             login(request, user)
-            return redirect('foodie:mapView')
+            return redirect('foodie:user_profile_page')
         else:
             print(form.errors)
     else:
@@ -49,6 +53,8 @@ def register(request):
     return render(request, 'register.html', {'form': form})
 
 def login_view(request):
+    if request.user.is_authenticated:
+        return redirect('foodie:user_profile_page')
     if request.method == 'POST':
         form = AuthenticationForm(request, data=request.POST)
         if form.is_valid():
@@ -57,7 +63,8 @@ def login_view(request):
             user = authenticate(username=username, password=password)
             if user is not None:
                 login(request, user)
-                messages.success(request, f'Welcome, {username}!')
+                messages.success(request, "Successfully logged in")
+                return redirect('foodie:user_profile_page') # readd success message when we add messages to user profile page
             else:
                 messages.error(request, 'Invalid username or password.')
         else:
@@ -88,12 +95,6 @@ def restaurant_data(request):
         })
 
     return JsonResponse({'restaurants': restaurant_list})
-
-
-from django.http import JsonResponse
-from .models import Restaurant
-import math
-
 
 def calculate_distance(lat1, lon1, lat2, lon2):
     R = 3958.8  # Radius of the Earth in miles
@@ -155,16 +156,61 @@ def restaurant_list(request):
         restaurants = Restaurant.objects.filter(Q(name__icontains=query) | Q(cuisine__icontains=query))
     else:
         restaurants = Restaurant.objects.all()
+    
+    favoriteRestaurants = []
+    if request.user.is_authenticated:
+        favoriteRestaurants = request.user.favorite_restaurants.all
 
     context = {
         'restaurants': restaurants,
         'query': query,
+        'favoriteRestaurants': favoriteRestaurants
     }
     return render(request, 'foodie/restaurant_list.html', context)
 
 def restaurant_detail(request, restaurant_id):
     restaurant = get_object_or_404(Restaurant, pk=restaurant_id)
     reviews = restaurant.reviews if restaurant.reviews else []
+
+    loggedIn = False
+    isFavorite = False
+    if request.user.is_authenticated:
+        loggedIn = True
+        if request.user.favorite_restaurants.filter(pk=restaurant_id).exists():
+            isFavorite = True
+
+    context = {
+        'restaurant': restaurant,
+        'reviews': reviews,
+        'loggedIn': loggedIn,
+        'isFavorite': isFavorite
+    }
+    return render(request, 'foodie/restaurant_detail.html', context)
+
+@login_required
+def add_review(request, restaurant_id):
+    restaurant = get_object_or_404(Restaurant, pk=restaurant_id)
+
+    if request.method == 'POST':
+        form = AddReviewForm(request.POST)
+        if form.is_valid():
+            review = form.cleaned_data['review']
+            rating = form.cleaned_data['rating']
+
+            restaurant.reviews.append({
+                'author_name': request.user.username,
+                'text': review,
+                'rating': rating
+            })
+
+            restaurant.save()
+            messages.success(request, "Review added successfully!")
+            return redirect('foodie:restaurant_detail', restaurant_id=restaurant.id)
+        else:
+            messages.error(request, 'There is an error in your review.')
+
+
+    reviews = restaurant.reviews
     context = {
         'restaurant': restaurant,
         'reviews': reviews,
@@ -178,6 +224,28 @@ def user_profile_page(request): # add user id parameter
         context = {
             'user': user,
         }
-        return render(request, "foodie/userPage.html", context) # return render(request, "foodie/userPage.html", {'user_id' : user_id})
+        return render(request, "foodie/userPage.html", context)
     else:
         return redirect('foodie:login')
+
+def add_restaurant_favorite(request, restaurant_id):
+    if request.method == 'POST' and request.user.is_authenticated:
+        restaurant = get_object_or_404(Restaurant, pk=restaurant_id)
+        request.user.favorite_restaurants.add(restaurant)
+        messages.success(request, "Favorite added successfully!")
+        return redirect('foodie:restaurant_detail', restaurant_id=restaurant.id)
+    else:
+        return redirect('foodie:login')
+
+def remove_restaurant_favorite(request, restaurant_id, destination):
+    if request.method == 'POST' and request.user.is_authenticated:
+        restaurant = get_object_or_404(Restaurant, pk=restaurant_id)
+        request.user.favorite_restaurants.remove(restaurant)
+        messages.success(request, "Favorite removed successfully!")
+        if destination != 'user_profile_page':
+            return redirect('foodie:restaurant_detail', restaurant_id=restaurant.id)
+        else:
+            return redirect('foodie:user_profile_page')
+    else:
+        return redirect('foodie:login')
+

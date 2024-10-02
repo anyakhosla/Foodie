@@ -45,3 +45,15 @@ class CustomUserCreationForm(UserCreationForm):
         if commit:
             user.save()
         return user
+
+
+class AddReviewForm(forms.Form):
+    review = forms.CharField(
+        label='Write your review here',
+        max_length=1000
+    )
+    rating = forms.IntegerField(
+        min_value=1,
+        max_value=5,
+        label='Rating (Integer from 1 to 5)'
+    )
