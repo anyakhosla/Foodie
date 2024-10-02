@@ -7,3 +7,5 @@ Dependencies:
 - Python 3
 - Django
 - Pillow
+
+To get this project, clone this repository, run `python manage.py migrate`, and then run `python manage.py runserver`.

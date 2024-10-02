@@ -19,7 +19,11 @@ def mapView(request):
     if not request.user.is_authenticated:
         return redirect("foodie:login")
     else:
-        return render(request, "foodie/mapView.html", {'GOOGLE_MAPS_API_KEY' : settings.GOOGLE_MAPS_API_KEY})
+        context = {
+            'GOOGLE_MAPS_API_KEY': settings.GOOGLE_MAPS_API_KEY,
+            'loggedIn': True
+        }
+        return render(request, "foodie/mapView.html", context)
 
 def register(request):
     if request.user.is_authenticated:
