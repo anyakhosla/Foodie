@@ -149,8 +149,6 @@ def filter_restaurants(request):
     return JsonResponse({'restaurants': filtered_restaurants})
 
 
-
-
 def restaurant_list(request):
     query = request.GET.get('q', '')
     if query:
