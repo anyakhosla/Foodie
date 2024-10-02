@@ -33,7 +33,7 @@ h2 {
 .d-grid {
     color: #1e88e5;
     text-align: center;
-    text-decoration: underline;
+    text-decoration: none;
     background-color: transparent;
     display: inline-block;
     margin-top: 20px;
@@ -204,23 +204,6 @@ form {
 label {
     font-family: Roboto, sans-serif;
 }
-
-.navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #333;
-    padding: 10px;
-}
-.navbar a {
-    color: white;
-    text-decoration: none;
-    padding: 14px 20px;
-}
-/* .navbar a:hover {
-    background-color: #ddd;
-    color: black;
-} */
 
 #restaurantLink {
     overflow: hidden;

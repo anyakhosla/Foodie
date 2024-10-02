@@ -1,4 +1,7 @@
+{% extends 'base.html' %}
 {% load static %}
+
+{% block content %}
 <!DOCTYPE html>
 <html lang="en">
 <head> <!--TECH DEBT: put the lines below in a css file-->
@@ -29,12 +32,17 @@
     </script>
 </head>
 <body>
-    <div class="navbar">
+    <!-- <div class="navbar">
         <div class="nav-left">
             <a href="{% url 'foodie:restaurant_list' %}">Restaurant List</a>
             <a href="{% url 'foodie:mapView' %}">Back to Map</a>
         </div>
-    </div>
+        {% if loggedIn %}
+            <div class="nav-right">
+                <a href="{% url 'foodie:user_profile_page' %}">User Page</a>
+            </div>
+        {% endif %}
+    </div> -->
 
     {% if messages %}
         {% for message in messages %}
@@ -52,14 +60,14 @@
         <form method="POST" action="{% url 'foodie:add_restaurant_favorite' restaurant.id %}">
             {% csrf_token %}
             <div class="d-grid">
-                <button type="submit" class="btn btn-primary">Add Favorite</button>
+                <button type="submit">Add Favorite</button>
             </div>
         </form>
     {% elif loggedIn and isFavorite %}
         <form method="POST" action="{% url 'foodie:remove_restaurant_favorite' restaurant.id 'restaurant_page' %}">
             {% csrf_token %}
             <div class="d-grid">
-                <button type="submit" class="btn btn-primary">Remove Favorite</button>
+                <button type="submit">Remove Favorite</button>
             </div>
         </form>
     {% endif %}
@@ -109,3 +117,5 @@
 
 </body>
 </html>
+
+{% endblock %}
