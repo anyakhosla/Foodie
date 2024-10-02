@@ -17,7 +17,7 @@
             <div class="alert alert-danger mt-3">
                 <ul>
                     {% for field, errors in form.errors.items %}
-                        <li>{{ field }}: {{ errors|striptags }}</li>
+                        <li>{{ errors|striptags }}</li>
                     {% endfor %}
                 </ul>
             </div>
