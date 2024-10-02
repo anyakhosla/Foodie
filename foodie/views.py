@@ -16,9 +16,10 @@ class CustomLoginView(LoginView):
     template_name = 'login.html'
 
 def mapView(request):
-    # question = get_object_or_404(Question, pk=id)
-    # return render(request, "foodie/mapView.html", {"question": question})
-    return render(request, "foodie/mapView.html", {'GOOGLE_MAPS_API_KEY' : settings.GOOGLE_MAPS_API_KEY})
+    if not request.user.is_authenticated:
+        return redirect("foodie:login")
+    else:
+        return render(request, "foodie/mapView.html", {'GOOGLE_MAPS_API_KEY' : settings.GOOGLE_MAPS_API_KEY})
 
 def register(request):
     if request.user.is_authenticated:
@@ -139,6 +140,9 @@ def filter_restaurants(request):
 
 
 def restaurant_list(request):
+    if not request.user.is_authenticated:
+        return redirect("foodie:login")
+
     query = request.GET.get('q', '')
     if query:
         restaurants = Restaurant.objects.filter(Q(name__icontains=query) | Q(cuisine__icontains=query))
@@ -160,6 +164,9 @@ def restaurant_list(request):
     return render(request, 'foodie/restaurant_list.html', context)
 
 def restaurant_detail(request, restaurant_id):
+    if not request.user.is_authenticated:
+        return redirect("foodie:login")
+
     restaurant = get_object_or_404(Restaurant, pk=restaurant_id)
     reviews = restaurant.reviews if restaurant.reviews else []
 
