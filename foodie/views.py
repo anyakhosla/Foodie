@@ -225,7 +225,7 @@ def add_review(request, restaurant_id):
         'restaurant': restaurant,
         'reviews': reviews,
     }
-    return render(request, 'foodie/restaurant_detail.html', context)
+    return redirect('foodie:restaurant_detail', restaurant_id=restaurant.id)
 
 # send to login if try to add review without being logged in
 
