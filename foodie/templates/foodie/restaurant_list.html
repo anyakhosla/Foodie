@@ -12,14 +12,23 @@
         function applyFilters() {
             const minRating = document.getElementById('min-rating').value;
             const maxDistance = document.getElementById('max-distance').value;
-            const url = `/foodie/filter_restaurants/?min_rating=${minRating}&max_distance=${maxDistance}`;
-
+            const query = document.querySelector('.search-input').value; // Get the search query
+            fetchRestaurants(minRating, maxDistance, query); // Pass query to fetchRestaurants
+        }
+        
+        
+            
+        
+        function fetchRestaurants(minRating = 1, maxDistance = 20, query = '') {
+            const url = `/foodie/filter_restaurants/?min_rating=${minRating}&max_distance=${maxDistance}&q=${query}`;
             fetch(url)
                 .then(response => response.json())
                 .then(data => {
                     updateRestaurantList(data.restaurants);
                 })
-                .catch(error => console.error('Error fetching restaurant data:', error));
+                .catch(error => {
+                    console.error('Error fetching restaurant data:', error);
+                });
         }
 
         function updateRestaurantList(restaurants) {
