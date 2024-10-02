@@ -5,7 +5,22 @@
     <title>Atlanta Restaurant Finder</title>
     <link rel="stylesheet" href="{% static 'restaurantPageList.css' %}">
     <link rel="stylesheet" href="{% static 'mapView.css' %}">
+    <link rel="stylesheet" href="{% static 'base.css' %}">
     <script src="https://maps.googleapis.com/maps/api/js?key={{ GOOGLE_MAPS_API_KEY }}&callback=initMap" async defer></script>
+    <style>
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #333;
+            padding: 10px;
+        }
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            padding: 14px 20px;
+        }
+    </style>
     <script>
         var map;
         var currentInfoWindow;
@@ -91,6 +106,8 @@
             map.fitBounds(bounds);
 
             if (restaurants.length === 0) {
+                bounds.extend(culcCenter);
+                map.fitBounds(bounds);
                 alert("No Results Found for this Search Term and Filter Criteria");
             }
         }
@@ -111,8 +128,21 @@
     </script>
 </head>
 <body>
-    <h1>Atlanta Restaurant Finder</h1>
-    
+    <div class="navbar">
+        <div class="nav-left">
+            <a href="{% url 'foodie:restaurant_list' %}">Restaurant List</a>
+            <a href="{% url 'foodie:mapView' %}">Back to Map</a>
+        </div>
+        {% if loggedIn %}
+            <div class="nav-right">
+                <a href="{% url 'foodie:user_profile_page' %}">User</a>
+            </div>
+        {% else %}
+            <div class="nav-right">
+                <a href="{% url 'foodie:login' %}">Login</a>
+            </div>
+        {% endif %}
+    </div>
     <!-- Insert search bar below title -->
     <div class="search-bar-container">
         <form method="GET" action="javascript:void(0);" class="search-form">
@@ -135,3 +165,4 @@
     <div id="map"></div>
 </body>
 </html>
+
