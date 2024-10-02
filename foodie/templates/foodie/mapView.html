@@ -9,21 +9,20 @@
         var map;
         var currentInfoWindow;
         var markers = [];
-        var atlantaCenter = {lat: 33.7490, lng: -84.3880};
+        var culcCenter = {lat: 33.7749, lng: -84.3964};
 
         function initMap() {
             map = new google.maps.Map(document.getElementById('map'), {
                 zoom: 14,
-                center: atlantaCenter
+                center: culcCenter
             });
 
             currentInfoWindow = null;
 
-            // Add a marker for the center of Atlanta
             new google.maps.Marker({
-                position: atlantaCenter,
+                position: culcCenter,
                 map: map,
-                title: "Center of Atlanta",
+                title: "Center of CULC",
                 icon: {
                     url: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png"
                 }
@@ -48,7 +47,7 @@
 
         function addMarkers(restaurants) {
             var bounds = new google.maps.LatLngBounds();
-            bounds.extend(atlantaCenter); // Include Atlanta center in bounds
+            bounds.extend(culcCenter); // Include Atlanta center in bounds
 
             restaurants.forEach(function(restaurant) {
                 var position = new google.maps.LatLng(restaurant.latitude, restaurant.longitude);
