@@ -37,7 +37,8 @@
         <div class="info">
             <p><strong>Username:</strong> {{ user.username }}</p>
             <p><strong>Email:</strong> {{ user.email }}</p>
-            <p><strong>City:</strong> {{ user.city }}</p>
+            <p><strong>Phone Number:</strong> {{ user.phone_number }}</p>
+            <p><strong>City, Zipcode:</strong> {{ user.city }}, {{ user.zip_code}} </p>
             <p><strong>Address:</strong> {{ user.address }} </p>
             {% if user.favorite_restaurants.all %}
                 <hr>
