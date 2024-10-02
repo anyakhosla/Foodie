@@ -90,27 +90,31 @@
     {% endfor %}
 
     <div class="reviews-section">
-        <button onclick="showReviewForm()" id="addReviewButton">Add a Review</button>
+        {% if loggedIn %}
+            <button onclick="showReviewForm()" id="addReviewButton">Add a Review</button>
 
-        <form action="{% url 'foodie:add_review' restaurant.id %}" method="post">
-            {% csrf_token %}
-            <div id="add_review_form" class="form-container" style="display: none;">
-                <br>
+            <form action="{% url 'foodie:add_review' restaurant.id %}" method="post">
+                {% csrf_token %}
+                <div id="add_review_form" class="form-container" style="display: none;">
+                    <br>
 
-                <label for="review">Write your review here:</label>
-                <br>
-                <textarea id="review" name="review" rows="4" cols="50" placeholder="Write your review here"></textarea>
+                    <label for="review">Write your review here:</label>
+                    <br>
+                    <textarea id="review" name="review" rows="4" cols="50" placeholder="Write your review here"></textarea>
 
-                <br><br>
+                    <br><br>
 
-                <label for="rating">Restaurant Rating (Integer from 1 to 5):&nbsp;&nbsp;&nbsp;</label>
-                <input type="number" id="rating" name="rating" min="1" max="5">
+                    <label for="rating">Restaurant Rating (Integer from 1 to 5):&nbsp;&nbsp;&nbsp;</label>
+                    <input type="number" id="rating" name="rating" min="1" max="5">
 
-                <br><br>
+                    <br><br>
 
-                <input type="submit" value="Submit Review" class="button">
-            </div>
-        </form>
+                    <input type="submit" value="Submit Review" class="button">
+                </div>
+            </form>
+        {% else %}
+            <p>Log In To Write Your Own Review</p>
+        {% endif %}
     </div>
 
     <div id="scroll-to"></div>
