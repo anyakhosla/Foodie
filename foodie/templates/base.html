@@ -19,7 +19,11 @@
         </div>
         {% if loggedIn %}
             <div class="nav-right">
-                <a href="{% url 'foodie:user_profile_page' %}">User Page</a>
+                <a href="{% url 'foodie:user_profile_page' %}">User</a>
+            </div>
+        {% else %}
+            <div class="nav-right">
+                <a href="{% url 'foodie:login' %}">Login</a>
             </div>
         {% endif %}
     </div>
