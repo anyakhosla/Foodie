@@ -146,13 +146,16 @@ def restaurant_list(request):
         restaurants = Restaurant.objects.all()
     
     favoriteRestaurants = []
+    loggedIn = False
     if request.user.is_authenticated:
         favoriteRestaurants = request.user.favorite_restaurants.all
+        loggedIn = True
 
     context = {
         'restaurants': restaurants,
         'query': query,
-        'favoriteRestaurants': favoriteRestaurants
+        'favoriteRestaurants': favoriteRestaurants,
+        'loggedIn': loggedIn
     }
     return render(request, 'foodie/restaurant_list.html', context)
 
@@ -221,6 +224,7 @@ def user_profile_page(request): # add user id parameter
         user = get_object_or_404(CustomUser, pk=request.user.id)
         context = {
             'user': user,
+            'loggedIn': True
         }
         return render(request, "foodie/userPage.html", context)
     else:
