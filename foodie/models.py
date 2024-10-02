@@ -43,5 +43,8 @@ class CustomUser(AbstractUser):
     # contact info
     phone_number = models.CharField(max_length=10, null=True, blank=True)
 
+    # reviews from this specific user
+    user_reviews = models.JSONField(default=list, blank=True)
+
     def __str__(self):
         return f"{self.name}"

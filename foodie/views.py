@@ -190,12 +190,20 @@ def add_review(request, restaurant_id):
                 'rating': rating
             })
 
+            request.user.user_reviews.append({
+                'author_name': request.user.username,
+                'restaurant_name': restaurant.name,
+                'restaurant_id': restaurant.id,
+                'text': review,
+                'rating': rating,
+            })
+
             restaurant.save()
+            request.user.save()
             messages.success(request, "Review added successfully!")
             return redirect('foodie:restaurant_detail', restaurant_id=restaurant.id)
         else:
             messages.error(request, 'There is an error in your review.')
-
 
     reviews = restaurant.reviews
     context = {
@@ -203,6 +211,8 @@ def add_review(request, restaurant_id):
         'reviews': reviews,
     }
     return render(request, 'foodie/restaurant_detail.html', context)
+
+# send to login if try to add review without being logged in
 
 def user_profile_page(request): # add user id parameter
     # add logic to check if user is signed in

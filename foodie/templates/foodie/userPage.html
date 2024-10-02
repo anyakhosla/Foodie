@@ -22,7 +22,17 @@
                 <h3>Favorite Restaurants</h3>
                 <ul>
                     {% for restaurant in user.favorite_restaurants.all %}
-                        <li><a href = "{% url 'foodie:restaurant_detail' restaurant.id %}">{{ restaurant.name }}</a></li>
+                        <li><a href = "{% url 'foodie:restaurant_detail' restaurant.id|add:'0' %}">{{ restaurant.name }}</a></li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+
+            {% if user.user_reviews %}
+                <hr>
+                <h3>Your Reviews</h3>
+                <ul>
+                    {% for review in user.user_reviews %}
+                        <li><b><a href = "{% url 'foodie:restaurant_detail' review.restaurant_id|add:'0' %}">{{ review.restaurant_name }}</a> - {{ review.rating }} / 5</b><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ review.text }}</li>
                     {% endfor %}
                 </ul>
             {% endif %}
