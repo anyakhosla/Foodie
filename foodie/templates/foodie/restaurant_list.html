@@ -32,7 +32,7 @@
                 listItem.className = 'restaurant-item';
                 listItem.innerHTML = `
                     <a href="/foodie/${restaurant.id}/" class="restaurant-link">
-                        ${restaurant.name} - ${restaurant.cuisine} (${restaurant.overall_rating} stars)
+                        ${restaurant.name} - ${restaurant.cuisine} (${restaurant.overall_rating} stars) ${restaurant.isFavorite ? '⭐' : ''}
                     </a>
                 `;
                 restaurantList.appendChild(listItem);

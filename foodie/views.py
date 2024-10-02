@@ -116,6 +116,10 @@ def filter_restaurants(request):
     for restaurant in restaurants:
         distance = calculate_distance(center_lat, center_lon, restaurant.latitude, restaurant.longitude)
 
+        isFavorite = False
+        if request.user.is_authenticated and request.user.favorite_restaurants.filter(pk=restaurant.id).exists():
+            isFavorite = True
+
         if restaurant.overall_rating >= min_rating and distance <= max_distance:
             filtered_restaurants.append({
                 'name': restaurant.name,
@@ -127,7 +131,8 @@ def filter_restaurants(request):
                 'id': restaurant.id,
                 'phone_number': restaurant.phone_number,
                 'website': restaurant.website,
-                'distance': round(distance, 2)  # Include the distance in the response
+                'distance': round(distance, 2),  # Include the distance in the response
+                'isFavorite': isFavorite
             })
 
     return JsonResponse({'restaurants': filtered_restaurants})
