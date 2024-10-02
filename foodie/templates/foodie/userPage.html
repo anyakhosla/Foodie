@@ -24,8 +24,16 @@
         </div>
     {% endif %}
     <div class="profile-container">
+        <div class="logout">
+            <form class="logout" action="{% url 'foodie:logout' %}" method="post">
+                {% csrf_token %}
+                <button id="logoutButton">Logout</button>
+            </form>
+        </div>
+
         <h1> User Profile </h1>
         <h2>{{ user.name }}</h2>
+
         <div class="info">
             <p><strong>Username:</strong> {{ user.username }}</p>
             <p><strong>Email:</strong> {{ user.email }}</p>
