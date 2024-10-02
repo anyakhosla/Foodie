@@ -48,7 +48,7 @@
 
         function addMarkers(restaurants) {
             var bounds = new google.maps.LatLngBounds();
-            bounds.extend(culcCenter); // Include Atlanta center in bounds
+            // bounds.extend(culcCenter); // Include Atlanta center in bounds
 
             restaurants.forEach(function(restaurant) {
                 var position = new google.maps.LatLng(restaurant.latitude, restaurant.longitude);
@@ -89,6 +89,10 @@
             });
 
             map.fitBounds(bounds);
+
+            if (restaurants.length === 0) {
+                alert("No Results Found for this Search Term and Filter Criteria");
+            }
         }
 
         function clearMarkers() {
