@@ -20,23 +20,6 @@ def mapView(request):
     # return render(request, "foodie/mapView.html", {"question": question})
     return render(request, "foodie/mapView.html", {'GOOGLE_MAPS_API_KEY' : settings.GOOGLE_MAPS_API_KEY})
 
-# def register(request):
-#     if request.method == 'POST':
-#         form = UserCreationForm(request.POST)
-#         if form.is_valid():
-#             user = form.save()
-#             login(request, user)
-#             messages.success(request, f'Account created for {user.username}!')
-#             return redirect('home')
-#     else:
-#         form = UserCreationForm()
-#     return render(request, 'register.html', {'form': form})
-
-# myapp/views.py
-
-# class CustomLoginView(LoginView):
-#     template_name = 'login.html'
-
 def register(request):
     if request.user.is_authenticated:
         return redirect('foodie:user_profile_page')
