@@ -4,6 +4,7 @@
 <head>
     <title>Atlanta Restaurant Finder</title>
     <link rel="stylesheet" href="{% static 'restaurantPageList.css' %}">
+    <link rel="stylesheet" href="{% static 'mapView.css' %}">
     <script src="https://maps.googleapis.com/maps/api/js?key={{ GOOGLE_MAPS_API_KEY }}&callback=initMap" async defer></script>
     <script>
         var map;
@@ -104,50 +105,6 @@
             fetchRestaurants(minRating, maxDistance, query); // Pass query to fetchRestaurants
         }
     </script>
-    <style>
-        #map {
-            position: absolute;
-            top: 140px; /* Adjust top to account for search bar */
-            left: 220px;
-            right: 0;
-            bottom: 0;
-        }
-        .sidebar {
-            position: fixed;
-            left: 0;
-            top: 140px; /* Adjust top to account for search bar */
-            width: 200px;
-            height: calc(100% - 140px);
-            background-color: white;
-            padding: 10px;
-            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
-            z-index: 1;
-        }
-        html, body {
-            height: 100%;
-            margin: 0;
-            padding: 0;
-        }
-        h1 {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            margin: 0;
-            background-color: #007bff;
-            color: white;
-            z-index: 2;
-        }
-        .search-bar-container {
-            position: fixed;
-            top: 60px; /* Below the title */
-            left: 0;
-            right: 0;
-            padding: 10px;
-            background-color: #f0f8ff;
-            text-align: center;
-        }
-    </style>
 </head>
 <body>
     <h1>Atlanta Restaurant Finder</h1>
