@@ -20,30 +20,15 @@ def mapView(request):
     # return render(request, "foodie/mapView.html", {"question": question})
     return render(request, "foodie/mapView.html", {'GOOGLE_MAPS_API_KEY' : settings.GOOGLE_MAPS_API_KEY})
 
-# def register(request):
-#     if request.method == 'POST':
-#         form = UserCreationForm(request.POST)
-#         if form.is_valid():
-#             user = form.save()
-#             login(request, user)
-#             messages.success(request, f'Account created for {user.username}!')
-#             return redirect('home')
-#     else:
-#         form = UserCreationForm()
-#     return render(request, 'register.html', {'form': form})
-
-# myapp/views.py
-
-# class CustomLoginView(LoginView):
-#     template_name = 'login.html'
-
 def register(request):
+    if request.user.is_authenticated:
+        return redirect('foodie:user_profile_page')
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
             user = form.save()
             login(request, user)
-            return redirect('foodie:mapView')
+            return redirect('foodie:user_profile_page')
         else:
             print(form.errors)
     else:
@@ -51,6 +36,8 @@ def register(request):
     return render(request, 'register.html', {'form': form})
 
 def login_view(request):
+    if request.user.is_authenticated:
+        return redirect('foodie:user_profile_page')
     if request.method == 'POST':
         form = AuthenticationForm(request, data=request.POST)
         if form.is_valid():
@@ -59,7 +46,8 @@ def login_view(request):
             user = authenticate(username=username, password=password)
             if user is not None:
                 login(request, user)
-                messages.success(request, f'Welcome, {username}!')
+                messages.success(request, "Successfully logged in")
+                return redirect('foodie:user_profile_page') # readd success message when we add messages to user profile page
             else:
                 messages.error(request, 'Invalid username or password.')
         else:
@@ -111,16 +99,26 @@ def calculate_distance(lat1, lon1, lat2, lon2):
 def filter_restaurants(request):
     min_rating = float(request.GET.get('min_rating', 1))
     max_distance = float(request.GET.get('max_distance', 20))
+    query = request.GET.get('q', '').strip()
 
     # Center of Atlanta
     center_lat = 33.7490
     center_lon = -84.3880
 
     restaurants = Restaurant.objects.all()
+
+    # Apply search query filter
+    if query:
+        restaurants = restaurants.filter(Q(name__icontains=query) | Q(cuisine__icontains=query))
+
     filtered_restaurants = []
 
     for restaurant in restaurants:
         distance = calculate_distance(center_lat, center_lon, restaurant.latitude, restaurant.longitude)
+
+        isFavorite = False
+        if request.user.is_authenticated and request.user.favorite_restaurants.filter(pk=restaurant.id).exists():
+            isFavorite = True
 
         if restaurant.overall_rating >= min_rating and distance <= max_distance:
             filtered_restaurants.append({
@@ -133,12 +131,11 @@ def filter_restaurants(request):
                 'id': restaurant.id,
                 'phone_number': restaurant.phone_number,
                 'website': restaurant.website,
-                'distance': round(distance, 2)  # Include the distance in the response
+                'distance': round(distance, 2),  # Include the distance in the response
+                'isFavorite': isFavorite
             })
 
     return JsonResponse({'restaurants': filtered_restaurants})
-
-
 
 
 def restaurant_list(request):
@@ -164,13 +161,17 @@ def restaurant_detail(request, restaurant_id):
     reviews = restaurant.reviews if restaurant.reviews else []
 
     loggedIn = False
+    isFavorite = False
     if request.user.is_authenticated:
         loggedIn = True
+        if request.user.favorite_restaurants.filter(pk=restaurant_id).exists():
+            isFavorite = True
 
     context = {
         'restaurant': restaurant,
         'reviews': reviews,
-        'loggedIn': loggedIn
+        'loggedIn': loggedIn,
+        'isFavorite': isFavorite
     }
     return render(request, 'foodie/restaurant_detail.html', context)
 
@@ -229,7 +230,20 @@ def add_restaurant_favorite(request, restaurant_id):
     if request.method == 'POST' and request.user.is_authenticated:
         restaurant = get_object_or_404(Restaurant, pk=restaurant_id)
         request.user.favorite_restaurants.add(restaurant)
-        return redirect('foodie:user_profile_page')
+        messages.success(request, "Favorite added successfully!")
+        return redirect('foodie:restaurant_detail', restaurant_id=restaurant.id)
+    else:
+        return redirect('foodie:login')
+
+def remove_restaurant_favorite(request, restaurant_id, destination):
+    if request.method == 'POST' and request.user.is_authenticated:
+        restaurant = get_object_or_404(Restaurant, pk=restaurant_id)
+        request.user.favorite_restaurants.remove(restaurant)
+        messages.success(request, "Favorite removed successfully!")
+        if destination != 'user_profile_page':
+            return redirect('foodie:restaurant_detail', restaurant_id=restaurant.id)
+        else:
+            return redirect('foodie:user_profile_page')
     else:
         return redirect('foodie:login')
 

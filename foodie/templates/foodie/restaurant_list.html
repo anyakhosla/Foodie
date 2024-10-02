@@ -6,42 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Foodie: Restaurants Nearby</title>
     <link rel="stylesheet" href="{% static 'restaurantPageList.css' %}">
-    <style>
-        /* .container {
-            display: flex;
-            flex-direction: row;
-        }
-        .sidebar {
-            width: 250px;
-            padding: 20px;
-            background-color: #f0f0f0;
-            border-right: 1px solid #ddd;
-        }
-        .main-content {
-            flex-grow: 1;
-            padding: 20px;
-        }
-        .filter-form label {
-            display: block;
-            margin-top: 10px;
-        }
-        .filter-form input {
-            width: 100%;
-            padding: 5px;
-            margin-top: 5px;
-        }
-        .filter-form button {
-            margin-top: 10px;
-            padding: 5px 10px;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
-        .filter-form button:hover {
-            background-color: #0056b3;
-        } */
-    </style>
     <script>
         function applyFilters() {
             const minRating = document.getElementById('min-rating').value;
@@ -68,7 +32,7 @@
                 listItem.className = 'restaurant-item';
                 listItem.innerHTML = `
                     <a href="/foodie/${restaurant.id}/" class="restaurant-link">
-                        ${restaurant.name} - ${restaurant.cuisine} (${restaurant.overall_rating} stars)
+                        ${restaurant.name} - ${restaurant.cuisine} (${restaurant.overall_rating} stars) ${restaurant.isFavorite ? '⭐' : ''}
                     </a>
                 `;
                 restaurantList.appendChild(listItem);
